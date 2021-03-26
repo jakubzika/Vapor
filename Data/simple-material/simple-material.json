@@ -1,0 +1,8 @@
+{
+    "name": "simple-material",
+    "type": "SOLID",
+    "fragment-shader": "simple-frag.glsl",
+    "vertex-shader": "simple-vert.glsl",
+    "uniforms": ["time","PVM"],
+    "attributes": ["position","normal", "uv"]
+}
