@@ -24,6 +24,7 @@ class SceneRenderer : public SceneRenderingInstance {
 
     public:
     SceneRenderer();
+
     void render();
 
     void addMesh(MeshAsset*,MaterialAsset*,ModelData* data);

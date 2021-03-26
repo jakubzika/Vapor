@@ -6,6 +6,7 @@ SceneRenderer::SceneRenderer() {
 
 }
 
+
 void SceneRenderer::addMesh(MeshAsset* mesh,MaterialAsset* material,ModelData* data) {
     models[mesh][material].push_back(data);
 }

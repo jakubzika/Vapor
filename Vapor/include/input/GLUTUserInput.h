@@ -3,10 +3,10 @@
 #include "pgr.h"
 
 #include "GLUTInputsHandler.h"
+#include "GLUTCallbackRegistry.h"
 #include "UserInput.h"
 
 namespace vpr {
-
 
 
 class GLUTUserInputHandler : public GLUTInputsHandler, public UserInputHandler  {
@@ -17,7 +17,14 @@ class GLUTUserInputHandler : public GLUTInputsHandler, public UserInputHandler  
 
     void tick();
     
-    void onKeyboardEvent(unsigned char key,int x, int y);
+
+    void keyUpdate(KeyEnum key, bool state);
+    void handleSpecialKeys();
+
+    void onKeyPress(unsigned char key,int x, int y);
+    void onKeyUp(unsigned char key,int x, int y);
+    void onSpecialKeyPress(int key,int x, int y);
+    void onSpecialKeyUp(int key,int x, int y);
     void onMouseMove(int x, int y);
     void onMousePress(int button, int state, int x, int y);
 };

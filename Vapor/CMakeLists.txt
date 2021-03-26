@@ -33,8 +33,14 @@ set(SOURCE_FILES_
     "src/input/UserInput.cpp"
     "src/input/GLUTUserInput.cpp"
     "src/input/GLUTCallbackRegistry.cpp"
+    "src/input/GLUTKeyMapping.cpp"
 
     "src/renderer/SceneRenderer.cpp"
+
+    "src/engine/Engine.cpp"
+
+    "src/window/Window.cpp"
+    "src/window/GLUTWindow.cpp"
 )
 
 set(HEADER_FILES
@@ -62,10 +68,16 @@ set(HEADER_FILES
     "include/input/GLUTUserInput.h"
     "include/input/GLUTInputsHandler.h"
     "include/input/GLUTCallbackRegistry.h"
+    "include/input/GLUTKeyMapping.h"
 
 
     "include/renderer/SceneRenderer.h"
     "include/renderer/SceneRenderingInstance.h"
+
+    "include/engine/Engine.h"
+
+    "include/window/Window.h"
+    "include/window/GLUTWindow.h"
     )
 
 # file(GLOB SOURCE "src/*.cpp" "include/*.h")

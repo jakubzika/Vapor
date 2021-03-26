@@ -2,7 +2,11 @@
 
 #include <map>
 
+#include "../Types.h"
+
 namespace vpr {
+
+
 
 struct UserInput {
     int mouseX, mouseY;
@@ -12,8 +16,8 @@ struct UserInput {
     bool deltaLeftMouseButton, deltaRightMouseButton;
 
 
-    std::map<unsigned char, bool> keyPressed;
-    std::map<unsigned char, bool> deltaKeyPressed;
+    bool keyPressed[KeyEnum::SIZE];
+    bool deltaKeyPressed[KeyEnum::SIZE];
 
 };
 

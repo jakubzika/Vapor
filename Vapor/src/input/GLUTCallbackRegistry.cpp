@@ -5,7 +5,10 @@ namespace vpr {
 void GLUTCallbackRegistry::mountEventListeners() {
     glutMotionFunc(GLUTCallbackRegistry::onMouseMove);
     glutPassiveMotionFunc(GLUTCallbackRegistry::onMouseMove);
-    glutKeyboardFunc(GLUTCallbackRegistry::onKeyboardEvent);
+    glutKeyboardFunc(GLUTCallbackRegistry::onKeyPress);
+    glutKeyboardUpFunc(GLUTCallbackRegistry::onKeyUp);
+    glutSpecialFunc(GLUTCallbackRegistry::onSpecialKeyPress);
+    glutSpecialUpFunc(GLUTCallbackRegistry::onSpecialKeyUp);
     glutMouseFunc((GLUTCallbackRegistry::onMousePress));
 
     GLUTCallbackRegistry::initialized = true;
@@ -17,11 +20,30 @@ void GLUTCallbackRegistry::setContext(GLUTInputsHandler* context) {
     GLUTCallbackRegistry::context = context;
 }
 
-void GLUTCallbackRegistry::onKeyboardEvent(unsigned char key,int x, int y) {
+void GLUTCallbackRegistry::onKeyPress(unsigned char key,int x, int y) {
     if(GLUTCallbackRegistry::context == nullptr) return;
 
-    GLUTCallbackRegistry::context->onKeyboardEvent(key,x,y);
+    GLUTCallbackRegistry::context->onKeyPress(key,x,y);
 }
+
+void GLUTCallbackRegistry::onKeyUp(unsigned char key,int x, int y) {
+    if(GLUTCallbackRegistry::context == nullptr) return;
+
+    GLUTCallbackRegistry::context->onKeyUp(key,x,y);
+}
+
+void GLUTCallbackRegistry::onSpecialKeyPress(int key,int x, int y) {
+    if(GLUTCallbackRegistry::context == nullptr) return;
+
+    GLUTCallbackRegistry::context->onSpecialKeyPress(key,x,y);
+}
+
+void GLUTCallbackRegistry::onSpecialKeyUp(int key,int x, int y) {
+    if(GLUTCallbackRegistry::context == nullptr) return;
+
+    GLUTCallbackRegistry::context->onSpecialKeyUp(key,x,y);
+}
+
 void GLUTCallbackRegistry::onMouseMove(int x, int y) {
     if(GLUTCallbackRegistry::context == nullptr) return;
 
@@ -35,5 +57,6 @@ void GLUTCallbackRegistry::onMousePress(int button, int state, int x, int y) {
 }
 
 bool GLUTCallbackRegistry::initialized = false;
+GLUTInputsHandler *GLUTCallbackRegistry::context = nullptr;
 
 }
