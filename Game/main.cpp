@@ -24,6 +24,9 @@
 #include "include/window/Window.h"
 #include "include/window/GLUTWindow.h"
 
+#include "include/action/UserCameraAction.h"
+#include "include/action/EntityHovering.h"
+#include "include/action/GLUTCaptureMouseSwitchAction.h"
 
 struct state {
     vpr::Engine* engine;
@@ -53,15 +56,15 @@ float time_tick;
 
 void addColumns(vpr::SceneNode* rootNode, vpr::MeshAsset *mesh, vpr::MaterialAsset* material) {
 
-    for(int i = 0; i < 10; i++) {
+    for(int i = 0; i < 7; i++) {
         vpr::ModelEntity* columnModel = new vpr::ModelEntity(mesh,material);
-        columnModel->setPosition(10.0,0.0,i*10.0);
+        columnModel->setPosition(5.0,0.0,i*10.0);
         columnModel->setScale(0.05f,0.05f,0.05f);
 
         rootNode->addChild((columnModel));
 
         columnModel = new vpr::ModelEntity(mesh,material);
-        columnModel->setPosition(0.0,0.0,4.0+i*10.0);
+        columnModel->setPosition(-5.0,0.0,i*10.0);
         columnModel->setScale(0.05f,0.05f,0.05f);
         rootNode->addChild((columnModel));
         
@@ -69,41 +72,54 @@ void addColumns(vpr::SceneNode* rootNode, vpr::MeshAsset *mesh, vpr::MaterialAss
     
 }
 
-void init(int argc, char** argv) {
-    vpr::Scene *scene = new vpr::Scene();
-    vpr::SceneCamera *camera = new vpr::SceneCamera();
-    vpr::SceneRenderer *renderer = new vpr::SceneRenderer();
-    vpr::SceneNode* columns =new vpr::SceneNode();
-    vpr::UserInputHandler* input = new vpr::GLUTUserInputHandler();
-    vpr::GLUTWindow* window = new vpr::GLUTWindow(1200,1200);
-    vpr::MeshesHandler* meshesHandler = vpr::MeshesHandler::get_instance();
-    vpr::MaterialsHandler* materialsHandler = vpr::MaterialsHandler::get_instance();
+// void init(int argc, char** argv) {
+
+
+//     vpr::Scene *scene = new vpr::Scene();
+//     vpr::SceneCamera *camera = new vpr::SceneCamera();
+//     vpr::SceneNode* root =new vpr::SceneNode();
+//     vpr::SceneNode* columns =new vpr::SceneNode();
+//     root->addChild(columns);
+
+//     vpr::GLUTWindow* window = new vpr::GLUTWindow(1200,1200);
+//     window->init(argc, argv);
+
+//     vpr::UserInputHandler* input = new vpr::GLUTUserInputHandler(1200,1200);
+
+//     vpr::MeshesHandler* meshesHandler = vpr::MeshesHandler::get_instance();
+//     vpr::MaterialsHandler* materialsHandler = vpr::MaterialsHandler::get_instance();
     
-    vpr::MeshAsset* columnMesh = meshesHandler->loadFromFile("../../../Data/simple-mesh/simple-mesh.json");
-    vpr::MaterialAsset* simpleMaterial = materialsHandler->loadFromFile("../../../Data/simple-material/simple-material.json");
+//     vpr::MeshAsset* columnMesh = meshesHandler->loadFromFile("../../../Data/simple-mesh/simple-mesh.json");
+//     vpr::MeshAsset* statueMesh = meshesHandler->loadFromFile("../../../Data/statue-mesh/statue-mesh.json");
+//     vpr::MaterialAsset* simpleMaterial = materialsHandler->loadFromFile("../../../Data/simple-material/simple-material.json");
 
-    vpr::ModelEntity* columnModel = new vpr::ModelEntity(columnMesh,simpleMaterial);
+//     vpr::ModelEntity* statueModel = new vpr::ModelEntity(statueMesh, simpleMaterial);
+//     statueModel->setPosition(0.0,0.0,70.0);
+//     statueModel->setScale(0.2,0.2,0.2);
+//     statueModel->setRotation(0.0,-0.4,0.0);
+//     root->addChild(statueModel);
 
-
-    scene->setRoot(columns);
-    camera->setWindowSize(1200,1200);
-    scene->setCamera(camera);
+//     scene->setRoot(root);
+//     camera->setWindowSize(1200,1200);
+//     scene->setCamera(camera);
     
-    addColumns(columns, columnMesh, simpleMaterial);
+//     addColumns(columns, columnMesh, simpleMaterial);
 
-    scene->gatherRenderingData(renderer);
+//     camera->lookAt(glm::vec3(0.0,1.0,0.0),glm::vec3(0.0,0.0,20.0),glm::vec3(0.0,1.0,0.0));
+    
+//     State.engine = new vpr::Engine(scene,input, window);
+    
+    
+//     State.engine->registerAction(new vpr::UserCameraAction(camera,input->getUserInput()));
+//     State.engine->registerAction(new vpr::GLUTCaptureMouseSwitchAction(input->getUserInput(),1200,1200, input));
+//     State.engine->registerAction(new vpr::EntityHovering(statueModel));
+    
+    
+//     window->setLoopContext(State.engine);
 
-    camera->lookAt(glm::vec3(5.0,1.0,0.0),glm::vec3(5.0,0.0,20.0),glm::vec3(0.0,1.0,0.0));
-    // columnModel->setRotation(0,0,0);
-    scene->updateData();
+    
 
-
-    window->init(argc, argv);
-    // Window* window = new Window(1200,1200)
-
-    State.engine = new vpr::Engine(scene,renderer,input, window);
-
-}
+// }
 
 void onTimer(int) {
     glutPostRedisplay();
@@ -121,11 +137,15 @@ int main(int argc, char** argv) {
 
     // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-    
+    vpr::MeshesHandler* meshesHandler = vpr::MeshesHandler::get_instance();
+    meshesHandler->setBasePath("../../../Data/meshes/");
+    meshesHandler->setFileExtension(".obj");
+    meshesHandler->loadAvailableAssets();
 
-    init(argc, argv);
+    // init(argc, argv);
 
-
+    // State.engine->init();
+    // State.engine->loop();
 
     // glutReshapeFunc(screenResize);
     // glutDisplayFunc(displayFunc);

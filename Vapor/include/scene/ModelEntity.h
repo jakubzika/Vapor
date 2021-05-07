@@ -19,7 +19,17 @@ namespace vpr {
 struct ModelData {
 
     glm::mat4 model;
-    glm::mat4 modelNormals;
+    glm::mat3 modelNormals;
+
+    float roughness;
+    float metalness;
+
+    AssetTypeId colorTexture;
+    AssetTypeId normalTexture;
+    AssetTypeId specularTexture;
+    AssetTypeId roughnessTexture;
+    AssetTypeId metalnessTexture;
+
 };
 
 class SceneObject;
@@ -34,16 +44,15 @@ class ModelEntity : public SceneEntity {
     ModelEntity(MeshAsset* mesh, MaterialAsset* material);
 
     void generateRenderingData(SceneRenderingInstance& renderer);
-    void updatePositions(glm::mat4 model, glm::mat4 modelNormals);
+    void updatePositions(glm::mat4 model, glm::mat3 modelNormals);
 
 
     private:
 
     ModelData data;
-    // hehe, instanced std::vector<data>
     MeshAsset* mesh;
     MaterialAsset* material;
-
+    
 };
 
 }

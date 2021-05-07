@@ -8,14 +8,13 @@ UserInputHandler::UserInputHandler() {
         this->userInput.keyPressed[i] = false;
         this->userInput.deltaKeyPressed[i] = false;
     }
+
+    
 }
 
 UserInput* UserInputHandler::getUserInput() {
     return &(this->userInput);
 }
 
-void UserInputHandler::tick() {
-
-}
 
 }

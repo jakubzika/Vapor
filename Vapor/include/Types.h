@@ -46,9 +46,9 @@ struct ShaderAttributeDescription {
     GLuint location;
 };
 
-static ShaderAttributeDescription positionAttribute{"position", GL_FLOAT,sizeof(GLfloat)*3,3,0};
-static ShaderAttributeDescription normalAttribute{"normal", GL_FLOAT,sizeof(GLfloat)*3,3,1};
-static ShaderAttributeDescription uvAttribute{"uv", GL_FLOAT,sizeof(GLfloat)*2,2,2};
+static ShaderAttributeDescription positionAttribute{"position", GL_FLOAT,sizeof(GLfloat)*3,3,1};
+static ShaderAttributeDescription normalAttribute{"normal", GL_FLOAT,sizeof(GLfloat)*3,3,2};
+static ShaderAttributeDescription uvAttribute{"uv", GL_FLOAT,sizeof(GLfloat)*2,2,3};
 
 static std::map<std::string, ShaderAttributeDescription> fixedAttributeLocations {
     {positionAttribute.name, positionAttribute}, 
@@ -65,18 +65,26 @@ struct UniformAttributeDescription {
 };
 
 static UniformAttributeDescription timeUniform{"time", GL_FLOAT,0, 1};
-static UniformAttributeDescription PVMUniform{"PVM", GL_FLOAT_MAT4,10, 20};
+static UniformAttributeDescription ProjectionUniform{"projection", GL_FLOAT_MAT4,10, 20};
+static UniformAttributeDescription ViewUniform{"view", GL_FLOAT_MAT4,30, 20};
+static UniformAttributeDescription ModelUniform{"model", GL_FLOAT_MAT4,50, 20};
+static UniformAttributeDescription PVMUniformInverse{"PVM_inverse", GL_FLOAT_MAT4,70, 20};
 
 struct UniformData {
     GLfloat time;
     glm::mat4 PVM;
+    glm::mat3 PVM_inverse;
+    
 
 };
 // static UniformAttributeDescription timeUniform{"time", GL_FLOAT,0, 1};
 
 static std::map<std::string, UniformAttributeDescription> fixedUniformLocations = {
     {timeUniform.name, timeUniform},
-    {PVMUniform.name, PVMUniform}
+    {ProjectionUniform.name, ProjectionUniform},
+    {ViewUniform.name, ViewUniform},
+    {ModelUniform.name, ModelUniform},
+    {PVMUniformInverse.name, PVMUniformInverse}
 };
 
 enum KeyEnum {

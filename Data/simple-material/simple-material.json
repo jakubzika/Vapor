@@ -3,6 +3,6 @@
     "type": "SOLID",
     "fragment-shader": "simple-frag.glsl",
     "vertex-shader": "simple-vert.glsl",
-    "uniforms": ["time","PVM"],
+    "uniforms": ["time","projection","view","model","PVM_inverse"],
     "attributes": ["position","normal", "uv"]
 }

@@ -29,13 +29,23 @@ void SceneRenderer::applyModelUniforms(MeshAsset* mesh, MaterialAsset* material,
     std::vector<std::string> materialUniforms = material->getMaterialConfiguration().uniforms;
 
     for(auto uniform: materialUniforms) {
-        if(uniform == "PVM") {
-            glm::mat4 PVM = this->camera->projection * this->camera->view * modelData->model;
-            // glm::vec4 tester = PVM * glm::vec4(10.0,0.0,4.0,1.0);
-                CHECK_GL_ERROR();
+        if(uniform == "projection") {
+            // glm::mat4 PVM = this->camera->projection * this->camera->view * modelData->model;
+            // // glm::vec4 tester = PVM * glm::vec4(10.0,0.0,4.0,1.0);
+            // glUniformMatrix4fv(PVMUniform.location,1,GL_FALSE,&this->camera->projection[0][0]);
+            // CHECK_GL_ERROR();
+            glUniformMatrix4fv(ProjectionUniform.location,1,GL_FALSE,&this->camera->projection[0][0]);
 
-            glUniformMatrix4fv(PVMUniform.location,1,GL_FALSE,&PVM[0][0]);
+
+        } else if(uniform == "view") {
+            glUniformMatrix4fv(ViewUniform.location,1,GL_FALSE,&this->camera->view[0][0]);
+        } else if(uniform == "model") {
+            glUniformMatrix4fv(ModelUniform.location,1,GL_FALSE,&modelData->model[0][0]);
+
+        } else if(uniform == "PVM_inverse") {
+            glUniformMatrix3fv(PVMUniformInverse.location,1,GL_FALSE,&modelData->modelNormals[0][0]);
                 CHECK_GL_ERROR();
+            
 
         } else if(uniform == "time" && this->appliedUniformData.time != this->uniformData.time) {
                 CHECK_GL_ERROR();

@@ -68,6 +68,7 @@
         "xtree": "cpp",
         "xutility": "cpp",
         "*.rh": "cpp",
-        "bit": "cpp"
+        "bit": "cpp",
+        "stop_token": "cpp"
     }
 }

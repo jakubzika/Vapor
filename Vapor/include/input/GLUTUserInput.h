@@ -13,10 +13,13 @@ class GLUTUserInputHandler : public GLUTInputsHandler, public UserInputHandler  
 
 
     public:
-    GLUTUserInputHandler();
+    GLUTUserInputHandler(int width, int height);
 
     void tick();
-    
+    void postTick();
+
+
+    void setLockedCursor(bool state);
 
     void keyUpdate(KeyEnum key, bool state);
     void handleSpecialKeys();
@@ -27,6 +30,11 @@ class GLUTUserInputHandler : public GLUTInputsHandler, public UserInputHandler  
     void onSpecialKeyUp(int key,int x, int y);
     void onMouseMove(int x, int y);
     void onMousePress(int button, int state, int x, int y);
+
+    private:
+    bool firstTimeMouse{true};
+    int width, height;
+    
 };
 
 

@@ -19,6 +19,8 @@ set(SOURCE_FILES_
     # "src/gl/Buffer.cpp"
     "src/hello.cpp"
     "src/assets/MaterialAsset.cpp"
+    "src/assets/TextureAsset.cpp"
+    "src/assets/ShaderAsset.cpp"
     "src/Util.cpp"
     "src/Types.cpp"
     "src/renderer/SceneRenderingInstance.cpp"
@@ -41,6 +43,10 @@ set(SOURCE_FILES_
 
     "src/window/Window.cpp"
     "src/window/GLUTWindow.cpp"
+
+    "src/action/UserCameraAction.cpp"
+    "src/action/GLUTCaptureMouseSwitchAction.cpp"
+    "src/action/EntityHovering.cpp"
 )
 
 set(HEADER_FILES
@@ -48,11 +54,14 @@ set(HEADER_FILES
     "include/assets/Asset.h"
     "include/assets/MeshAsset.h"
     "include/assets/MaterialAsset.h"
+    "include/assets/TextureAsset.h"
+    "include/assets/ShaderAsset.h"
 
     "include/gl/GLBuffer.h"
     "include/utils/Singleton.h"
     "include/hello.h"
     "include/nlohmann/json.hpp"
+    "include/stb/stb_image.h"
     "include/Types.h"
     "include/gl/VecHash.h"
     "include/Util.h"
@@ -78,6 +87,11 @@ set(HEADER_FILES
 
     "include/window/Window.h"
     "include/window/GLUTWindow.h"
+
+    "include/action/IAction.h"
+    "include/action/UserCameraAction.h"
+    "include/action/EntityHovering.h"
+    "include/action/GLUTCaptureMouseSwitchAction.h"
     )
 
 # file(GLOB SOURCE "src/*.cpp" "include/*.h")

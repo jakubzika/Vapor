@@ -26,7 +26,7 @@ bool MeshAsset::loadConfiguration(const std::string &path) {
 
     MeshConfiguration &configuration = this->configuration;
     configuration.type = getModelType(meshConfig["type"].get<std::string>());
-    configuration.material = meshConfig["material"].get<std::string>();
+    //configuration.material = meshConfig["material"].get<std::string>();
     configuration.mesh = meshConfig["mesh"].get<std::string>();
     configuration.name = meshConfig["name"].get<std::string>();
 
@@ -38,6 +38,10 @@ bool MeshAsset::loadConfiguration(const std::string &path) {
 
     return true;
 }
+
+// bool MeshAsset::loadFromConfiguration(json configuration) {
+//     return false;
+// }
 
 bool MeshAsset::loadFromPath(const std::string &configurationPath) {
 
@@ -67,18 +71,22 @@ bool MeshAsset::loadFromPath(const std::string &configurationPath) {
     while(!file.eof()) {
         file >> buffer;
 
+        // parses vertices
         if(buffer == "v") {
             vertexList.push_back({});
             file >> vertexList.back().x >> vertexList.back().y >> vertexList.back().z;
         }
+        // parses normals
         else if(buffer == "vn") {
             normalsList.push_back({});
             file >> normalsList.back().x >> normalsList.back().y >> normalsList.back().z;
         }
+        // parses uv's
         else if(buffer == "vt") {
             texturesList.push_back({});
             file >> texturesList.back().x >> texturesList.back().y;
         }
+        // parses faces and indexes for vertices,normals,uvs
         else if(buffer == "f") {
             // we expect triangulated mesh so each face that has more than 3 verticies is a crash
             std::vector<glm::vec3> indices;
@@ -193,15 +201,15 @@ void MeshAsset::constructBuffers(std::vector<glm::vec3> &vertices,std::vector<gl
                 verticesReordered.push_back(v.y);
                 verticesReordered.push_back(v.z);
 
-                
-                auto& vt = uvs[faceVertex.y-1];
+                auto& vt = normals[faceVertex.z-1];
                 normalsReordered.push_back(vt.x);
                 normalsReordered.push_back(vt.y);
+                normalsReordered.push_back(vt.z);
 
-                auto& vn = normals[faceVertex.z-1];
+                auto& vn = uvs[faceVertex.y-1];
                 uvsReordered.push_back(vn.x);
                 uvsReordered.push_back(vn.y);
-                uvsReordered.push_back(vn.z);
+                
 
                 indices.push_back(bufferEndIndex++);
 

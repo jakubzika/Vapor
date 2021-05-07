@@ -32,6 +32,11 @@ class SceneCamera : SceneObject{
     void setCamera(glm::vec3 position ,glm::vec3 center, glm::vec3 up);
     void setWindowSize(int width,int height);
     void setFOV(float FOV);
+
+    glm::vec3 getPosition() {return position;}
+    glm::vec3 getCenter() {return center;}
+    glm::vec3 getUp() {return up;}
+
     
     CameraData* getCameraData();
 
@@ -46,6 +51,8 @@ class SceneCamera : SceneObject{
     glm::vec3 position{0.0,0.0,0.0};
     glm::vec3 center{0.0,0.0,1.0};
     glm::vec3 up{0.0,1.0,0.0};
+
+    
 
 };
 

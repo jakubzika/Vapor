@@ -23,7 +23,6 @@ struct MeshConfiguration {
   std::string name;
   std::string mesh;
   ModelType type;
-  std::string material;
 
   std::vector<std::string> attributes;
 };
@@ -32,6 +31,7 @@ class MeshAsset: public Asset {
 
   public:
     bool loadFromPath(const std::string &path) override;
+    // bool loadFromConfiguration(json configuration);
     // bool loadFromBuffer(void * data,std::size_t dataSize);
 
     ModelType modelType;

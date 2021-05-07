@@ -25,7 +25,8 @@ void Scene::updateData() {
     if(this->root != nullptr) {
 
         glm::mat4 matrixRoot(1.0);
-        this->root->updatePositions(matrixRoot,matrixRoot);
+        glm::mat3 normalMatrixRoot(1.0);
+        this->root->updatePositions(matrixRoot,normalMatrixRoot);
     }
 
     if(this->camera != nullptr) {

@@ -7,6 +7,7 @@
 
 namespace vpr {
 
+
 class GLUTWindow : public Window{
     public:
 
@@ -14,7 +15,10 @@ class GLUTWindow : public Window{
 
     void init(int argc, char** argv);
 
+    void setLoopContext(IWindowRenderer* windowRenderer);
 
+    static void displayLoop();
+    static IWindowRenderer* windowRendererContext;
     static GLUTWindow* instance;
     private:
 };

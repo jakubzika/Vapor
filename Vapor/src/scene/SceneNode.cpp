@@ -21,13 +21,14 @@ void SceneNode::generateRenderingData(SceneRenderingInstance& renderer) {
     }
 }
 
-void SceneNode::updatePositions(glm::mat4 model, glm::mat4 modelNormals) {
+void SceneNode::updatePositions(glm::mat4 model, glm::mat3 modelNormals) {
 
     model = glm::translate(model,this->position);
     model = glm::scale(model,this->scale);
     model = glm::rotate(model,this->rotation.x, glm::vec3(1.0,0.0,0.0));
     model = glm::rotate(model,this->rotation.y, glm::vec3(0.0,1.0,0.0));
     model = glm::rotate(model,this->rotation.z, glm::vec3(0.0,0.0,1.0));
+
 
     for(auto& const child : this->childs) 
     {

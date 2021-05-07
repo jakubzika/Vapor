@@ -9,8 +9,9 @@
 
 namespace vpr {
 
-GLUTUserInputHandler::GLUTUserInputHandler() {
-
+GLUTUserInputHandler::GLUTUserInputHandler(int width, int height) {
+    this->width = width;
+    this->height = height;
     GLUTCallbackRegistry::setContext(this);
     glutIgnoreKeyRepeat(1);
 }
@@ -76,6 +77,16 @@ void GLUTUserInputHandler::onSpecialKeyUp(int keyCode,int x, int y) {
 }
 
 void GLUTUserInputHandler::onMouseMove(int x, int y) {
+    if(this->firstTimeMouse) {
+        this->userInput.mouseX = x;
+        this->userInput.mouseY = y;    
+
+        this->userInput.deltaMouseX = 0;
+        this->userInput.deltaMouseY = 0;
+        this->firstTimeMouse = false;
+        return;
+    }
+
     int oldX = this->userInput.mouseX;
     int oldY = this->userInput.mouseY;
 
@@ -100,6 +111,30 @@ void GLUTUserInputHandler::onMousePress(int button, int state, int x, int y) {
         this->userInput.deltaRightMouseButton = true;
     }
 }   
+
+
+void GLUTUserInputHandler::postTick() {
+
+    if(this->cursorLocked) {
+        glutWarpPointer(this->width/2,this->height/2);
+        this->userInput.mouseX = this->width/2;
+        this->userInput.mouseY = this->height/2;
+
+    }
+}
+
+
+void GLUTUserInputHandler::setLockedCursor(bool state) {
+    if(this->cursorLocked == state) return;
+    this->userInput.mouseLocked = state;
+    if(this->cursorLocked && state == false) {
+        glutSetCursor(GLUT_CURSOR_INHERIT);
+    } else {
+        glutSetCursor(GLUT_CURSOR_NONE);
+    }
+    this->cursorLocked = state;
+
+}
 
 
 }
