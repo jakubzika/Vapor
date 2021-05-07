@@ -12,7 +12,7 @@ class SceneEntity : public SceneObject {
     SceneEntity();
 
     virtual void generateRenderingData(SceneRenderingInstance& renderer);
-    virtual void updatePositions(glm::mat4 model, glm::mat4 modelNormals);
+    virtual void updatePositions(glm::mat4 model, glm::mat3 modelNormals);
 
     void setParent(SceneEntity* parent);
 
