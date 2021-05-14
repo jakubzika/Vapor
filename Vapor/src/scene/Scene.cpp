@@ -15,13 +15,16 @@ Scene::~Scene() {
 }
 
 void Scene::gatherRenderingData(SceneRenderingInstance& renderer) {
+    renderer.beforeGather();
     renderer.setCamera(this->camera->getCameraData());
     if(this->root != nullptr) {
         this->root->generateRenderingData(renderer);
     }
+    renderer.afterGather();
 }
 
-void Scene::updateData() {
+void Scene::updateData(SceneRenderingInstance& renderer) {
+    renderer.beforeDataUpdate();
     if(this->root != nullptr) {
 
         glm::mat4 matrixRoot(1.0);
@@ -33,6 +36,7 @@ void Scene::updateData() {
         this->camera->updateView();
         this->camera->updateProjection();
     }
+    renderer.afterDataUpdate();
 }
 
 void Scene::setRoot(SceneEntity* root) {

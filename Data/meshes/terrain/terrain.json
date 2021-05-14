@@ -1,0 +1,7 @@
+{
+    "name": "terrain",
+    "mesh": "terrain.obj",
+    "type": "SOLID",
+    "material": "terrain-material",
+    "attributes": ["position","normal","uv"]
+}

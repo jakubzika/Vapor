@@ -6,15 +6,30 @@ ModelEntity::ModelEntity() {
 
 }
 
-ModelEntity::ModelEntity(MeshAsset* mesh, MaterialAsset* material) {
-    this->mesh = mesh;
-    this->material = material;
+ModelEntity::ModelEntity(AssetTypeId mesh, AssetTypeId material) {
+    this->meshId = mesh;
+    this->materialId = material;
+}
+
+ModelEntity::ModelEntity(string meshName, string materialName) {
+    this->meshId = MeshesHandler::get_instance()->getId(meshName);
+    this->materialId = MaterialsHandler::get_instance()->getId(materialName);
 }
 
 void ModelEntity::generateRenderingData(SceneRenderingInstance& renderer) {
-     if(this->mesh == nullptr || this->material == nullptr) return;
+    if(this->meshId == 0 || this->materialId == 0) return;
+    
+    MeshesHandler* meshesHandler = MeshesHandler::get_instance();
+    MaterialsHandler* materialsHandler = MaterialsHandler::get_instance();
+    TexturesHandler* texturesHandler = TexturesHandler::get_instance();
+    ShadersHandler* shadersHandler = ShadersHandler::get_instance();
 
-     renderer.addMesh(this->mesh,this->material,&this->data);
+    MeshAsset* mesh = meshesHandler->getAsset(this->meshId);
+    MaterialAsset* material = materialsHandler->getAsset(this->materialId);
+
+    this->data.availableTextures = material->getAvailableTextures();    
+    
+    renderer.addMesh(mesh,material,&this->data);
 }
 
 void ModelEntity::updatePositions(glm::mat4 model, glm::mat3 modelNormals) {

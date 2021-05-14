@@ -30,7 +30,7 @@ struct MeshConfiguration {
 class MeshAsset: public Asset {
 
   public:
-    bool loadFromPath(const std::string &path) override;
+    bool load(string path) override;
     // bool loadFromConfiguration(json configuration);
     // bool loadFromBuffer(void * data,std::size_t dataSize);
 

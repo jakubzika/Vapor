@@ -43,7 +43,7 @@ bool MeshAsset::loadConfiguration(const std::string &path) {
 //     return false;
 // }
 
-bool MeshAsset::loadFromPath(const std::string &configurationPath) {
+bool MeshAsset::load(string configurationPath) {
 
     this->path = configurationPath;
     this->loadConfiguration(configurationPath);

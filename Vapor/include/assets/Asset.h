@@ -12,7 +12,7 @@ namespace vpr {
 class Asset {
   public:
     Asset();
-    virtual bool loadFromPath(const std::string &path);
+    virtual bool load(std::string path);
     // virtual bool loadFromConfiguration(json confifuration);
 
     // virtual bool loadFromBuffer(void * data,std::size_t dataSize);

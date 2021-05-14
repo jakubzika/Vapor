@@ -24,7 +24,7 @@ class Scene {
     ~Scene();
 
     void gatherRenderingData(SceneRenderingInstance& renderer);
-    void updateData();
+    void updateData(SceneRenderingInstance& renderer);
 
     void setRoot(SceneEntity* root);
     SceneEntity* getRoot();

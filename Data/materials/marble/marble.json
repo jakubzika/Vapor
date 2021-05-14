@@ -1,0 +1,13 @@
+{
+    "shader": "simple",
+    "roughness": 0.0,
+    "metalness": 0.0,
+    "textures": {
+        "none-color": "marble-color",
+        "none-normal": "column-normal",
+        "none-specular": "column-specular",
+        "none-roughness": "gloss-texture",
+        "none-metalness": "metalness-texture",
+        "none-reflection": "reflection-txture"
+    }
+}

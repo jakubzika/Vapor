@@ -6,5 +6,4 @@ namespace vpr {
 
 ModelType getModelType(std::string type);
 
-
 }

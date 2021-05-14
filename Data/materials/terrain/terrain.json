@@ -1,0 +1,12 @@
+{
+    "shader": "simple",
+    "roughness": 0.0,
+    "metalness": 0.0,
+    "textures": {
+        "color": "terrain-color",
+        "none-normal": "column-normal",
+        "none-specular": "column-specular",
+        "none-roughness": "gloss-texture",
+        "none-metalness": "metalness-texture"
+    }
+}

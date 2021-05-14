@@ -14,7 +14,7 @@ Engine::Engine(Scene* scene, UserInputHandler* handler, Window* window) {
 
 void Engine::init() {
     this->scene->gatherRenderingData(renderer);
-    scene->updateData();
+    scene->updateData(renderer);
 
     // glutMainLoop();
 }
@@ -46,7 +46,7 @@ void Engine::loop() {
         this->processActions();
         
 
-        this->scene->updateData();
+        this->scene->updateData(renderer);
         this->renderer.render();
 
         glutSwapBuffers();

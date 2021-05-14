@@ -1,0 +1,7 @@
+{
+    "name": "column",
+    "mesh": "column-simplified3.obj",
+    "type": "SOLID",
+    "material": "simple-material",
+    "attributes": ["position","normal","uv"]
+}

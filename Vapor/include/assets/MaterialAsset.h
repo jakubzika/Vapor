@@ -2,49 +2,80 @@
 
 #include "pgr.h"
 #include <vector>
+#include <tuple>
 
 #include "Asset.h"
+#include "AssetHandler.h"
 #include "../Types.h"
+#include "TextureAsset.h"
+#include "ShaderAsset.h"
 
 namespace vpr {
 
+using string = string;
 
 struct MaterialConfiguration {
-    std::string name;
+    string name;
+    string shader;
+
+    string colorTexture{""};
+    string normalTexture{""};
+    string specularTexture{""};
+    string roughnessTexture{""};   
+    string metalnessTexture{""};
+    string reflectionTexture{""};
+
     ModelType type;
-    std::string fragmentShader,vertexShader;
-    
-    std::vector<std::string> uniforms;
-    std::vector<std::string> attributes;
+    float roughness{-1.0f};
+    float metalness{-1.0f};
+        
 };
+
+// struct MaterialData {
+//     TextureMask availableTextures;
+//     std::vector<std::tuple<TextureMask, TextureAsset*>> textures;
+
+//     ShaderAsset* shader;
+// };
+
+
 
 class MaterialAsset : public Asset {
 
     public:
     
-    bool loadFromPath(const std::string &path) override;
+
+    bool load(string path) override;
+    bool loadConfiguration(string path);
     void use();
 
-    MaterialConfiguration getMaterialConfiguration();
-    
+    MaterialConfiguration getMaterialConfiguration() {return configuration;};
+    AssetTypeId getShaderId() {return shader;};
+
+    TextureMask getAvailableTextures();
+    std::vector<std::tuple<TextureMask, AssetTypeId>> getTextureIds();
+    ShaderAsset* getShaderAsset();
+
+    std::vector<std::tuple<TextureMask, TextureAsset*>> getTextureAssets();
+
+
     private:
 
-    GLuint program;
     ModelType modelType;
 
-    std::string fragmentShaderPath;
-    std::string vertexShaderPath;
+    AssetTypeId colorTexture{0};
+    AssetTypeId normalTexture{0};
+    AssetTypeId specularTexture{0};
+    AssetTypeId roughnessTexture{0};
+    AssetTypeId metalnessTexture{0};
+    AssetTypeId reflectionTexture{0};
+
+    AssetTypeId shader;
 
     MaterialConfiguration configuration;
 
-    bool loadShader(const std::string &path, GLenum shaderType, GLuint &shader); 
-    bool loadConfiguration(const std::string &path);
 
-    void setUniformLocations();
-    void setAttributeLocations();
 
-    // void
-    // void createProgram(GLuint, GLuint);
 };
 
 }

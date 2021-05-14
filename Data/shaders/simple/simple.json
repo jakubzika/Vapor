@@ -1,0 +1,7 @@
+{
+    "fragment": "simple-frag.glsl",
+    "vertex": "simple-vert.glsl",
+    "uniforms": ["projection","view","model","PVM_inverse", "available_textures","color_texture"],
+    "attributes": ["position","normal", "uv"],
+    "uniformBufferObjects": ["lights"]
+}

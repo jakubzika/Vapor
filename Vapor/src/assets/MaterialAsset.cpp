@@ -13,8 +13,7 @@
 namespace vpr {
 
 
-bool MaterialAsset::loadConfiguration(const std::string &path) {
-    this->path = path;
+bool MaterialAsset::loadConfiguration(std::string path) {
 
     std::ifstream file(path.c_str(), std::ios::in);
     if(!file) return false;
@@ -22,22 +21,22 @@ bool MaterialAsset::loadConfiguration(const std::string &path) {
     nlohmann::json materialConfig;
     file >> materialConfig;
 
-    MaterialConfiguration &configuration = this->configuration;
-    configuration.type = getModelType(materialConfig["type"].get<std::string>());
-    configuration.fragmentShader = materialConfig["fragment-shader"].get<std::string>();
-    configuration.vertexShader = materialConfig["vertex-shader"].get<std::string>();
-    configuration.name = materialConfig["name"].get<std::string>();
+    MaterialConfiguration& configuration = this->configuration;
 
-    // TODO: load configuration uniforms
+    configuration.roughness = materialConfig["roughness"].get<float>();
+    configuration.metalness = materialConfig["metalness"].get<float>();
+    configuration.shader = materialConfig["shader"].get<string>();
 
-
-    for(auto attributesIt = materialConfig["attributes"].begin();attributesIt != materialConfig["attributes"].end(); ++attributesIt) {
-        configuration.attributes.push_back(attributesIt.value().get<std::string>());
+    if(materialConfig["textures"].is_object()) {
+        auto textures = materialConfig["textures"];
+        if(textures["color"].is_string()) configuration.colorTexture = textures["color"].get<string>();
+        if(textures["normal"].is_string()) configuration.normalTexture = textures["normal"].get<string>();
+        if(textures["specular"].is_string()) configuration.specularTexture = textures["specular"].get<string>();
+        if(textures["roughness"].is_string()) configuration.roughnessTexture = textures["roughness"].get<string>();
+        if(textures["metalness"].is_string()) configuration.metalnessTexture = textures["metalness"].get<string>();
+        if(textures["reflection"].is_string()) configuration.reflectionTexture = textures["reflection"].get<string>();
     }
-
-    for(auto uniformsIt = materialConfig["uniforms"].begin();uniformsIt != materialConfig["uniforms"].end(); ++uniformsIt) {
-        configuration.uniforms.push_back(uniformsIt.value().get<std::string>());
-    }
+    
 
 
 
@@ -46,120 +45,75 @@ bool MaterialAsset::loadConfiguration(const std::string &path) {
     return true;
 }
 
-bool MaterialAsset::loadFromPath(const std::string &configurationPath) {
+bool MaterialAsset::load(std::string configurationPath) {
     
     this->loadConfiguration(configurationPath);
 
-    std::filesystem::path p = configurationPath;
-    p = p.remove_filename();
-    this->fragmentShaderPath = p.append(this->configuration.fragmentShader).string();
-    p.remove_filename(); // cuz this shit is not immutable
-    this->vertexShaderPath = p.append(this->configuration.vertexShader).string();
+    TexturesHandler* texturesHandler = TexturesHandler::get_instance();
 
-    std::cout << "paths" << this->fragmentShaderPath << " " << this->vertexShaderPath << std::endl;
+    if(!configuration.colorTexture.empty()) colorTexture = texturesHandler->getId(configuration.colorTexture);
+    if(!configuration.normalTexture.empty()) normalTexture = texturesHandler->getId(configuration.normalTexture);
+    if(!configuration.specularTexture.empty()) specularTexture = texturesHandler->getId(configuration.specularTexture);
+    if(!configuration.roughnessTexture.empty()) roughnessTexture = texturesHandler->getId(configuration.roughnessTexture);
+    if(!configuration.metalnessTexture.empty()) metalnessTexture = texturesHandler->getId(configuration.metalnessTexture);
+    if(!configuration.reflectionTexture.empty()) reflectionTexture = texturesHandler->getId(configuration.reflectionTexture);
+
+    ShadersHandler* shadersHandler = ShadersHandler::get_instance();
     
-
-    GLuint fragmentShader, vertexShader;
-    bool resFrag = this->loadShader(this->fragmentShaderPath, GL_FRAGMENT_SHADER, fragmentShader);
-    bool resVert = this->loadShader(this->vertexShaderPath, GL_VERTEX_SHADER, vertexShader);
-
-    if(!resFrag || !resVert) return false;
-
-    this->program = glCreateProgram();
-
-    glAttachShader(this->program, fragmentShader);
-    glAttachShader(this->program, vertexShader);
-
-    setAttributeLocations();
-    setUniformLocations();
-
-    glLinkProgram(this->program);
-
-    int linkStatus;
-    char infoLog[512];
-    glGetProgramiv(this->program, GL_LINK_STATUS, &linkStatus);
-    if(!linkStatus) {
-        glGetShaderInfoLog(this->program, 512, NULL, infoLog);
-        std::cout << "Shader linking error\n" << infoLog;
-        return false;
-    }
-    
-    glDeleteShader(fragmentShader);
-    glDeleteShader(vertexShader);
+    shader = shadersHandler->getId(configuration.shader);
 
     return true;
 }
 
-bool MaterialAsset::loadShader(const std::string& shaderPath, GLenum shaderType, GLuint &shader) {
+TextureMask MaterialAsset::getAvailableTextures() {
+    TextureMask available = 0;
+    if(colorTexture) available |= COLOR_TEXTURE;
+    if(normalTexture) available |= NORMAL_TEXTURE;
+    if(specularTexture) available |= SPECULAR_TEXTURE;
+    if(roughnessTexture) available |= ROUGHNESS_TEXTURE;
+    if(metalnessTexture) available |= METALNESS_TEXTURE;
+    if(reflectionTexture) available |= REFLECTION_TEXTURE;
+    return available;
+}
 
-    std::string code;
-    std::ifstream shaderFile;
+std::vector<std::tuple<TextureMask, AssetTypeId>> MaterialAsset::getTextureIds() {
+    std::vector<std::tuple<TextureMask, AssetTypeId>> ids;
+    if(colorTexture) ids.push_back(std::make_tuple(COLOR_TEXTURE,colorTexture));
+    if(normalTexture) ids.push_back(std::make_tuple(NORMAL_TEXTURE,normalTexture));
+    if(specularTexture) ids.push_back(std::make_tuple(SPECULAR_TEXTURE,specularTexture));
+    if(roughnessTexture) ids.push_back(std::make_tuple(ROUGHNESS_TEXTURE,roughnessTexture));
+    if(metalnessTexture) ids.push_back(std::make_tuple(METALNESS_TEXTURE,metalnessTexture));
+    if(reflectionTexture) ids.push_back(std::make_tuple(REFLECTION_TEXTURE,reflectionTexture));
 
-    std::cout << "Loading shader file " << shaderPath << std::endl;
+    return ids;
+}
 
-    shaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
+std::vector<std::tuple<TextureMask, TextureAsset*>> MaterialAsset::getTextureAssets() {
+    TexturesHandler* texturesHandler = TexturesHandler::get_instance();
+    
+    std::vector<std::tuple<TextureMask, TextureAsset*>> assets;
 
-    try {
-        shaderFile.open(shaderPath);
-        if(!shaderFile) {
-            std::cout << "Could not open file " << shaderPath << std::endl;
-            return false;
-        }
-        std::stringstream shaderStream;
-        shaderStream << shaderFile.rdbuf();
-        shaderFile.close();
+    if(colorTexture) assets.push_back(std::make_tuple(COLOR_TEXTURE,texturesHandler->getAsset(colorTexture)));
+    if(normalTexture) assets.push_back(std::make_tuple(NORMAL_TEXTURE,texturesHandler->getAsset(normalTexture)));
+    if(specularTexture) assets.push_back(std::make_tuple(SPECULAR_TEXTURE,texturesHandler->getAsset(specularTexture)));
+    if(roughnessTexture) assets.push_back(std::make_tuple(ROUGHNESS_TEXTURE,texturesHandler->getAsset(roughnessTexture)));
+    if(metalnessTexture) assets.push_back(std::make_tuple(METALNESS_TEXTURE,texturesHandler->getAsset(metalnessTexture)));
+    if(reflectionTexture) assets.push_back(std::make_tuple(REFLECTION_TEXTURE,texturesHandler->getAsset(reflectionTexture)));
+    return assets;
+}
 
-        code = shaderStream.str();
-
-    } catch(std::ifstream::failure e) {
-        shaderFile.close();
-        std::cout << "Could not read from shader file " << shaderPath << std::endl;
-        return false;
-    }
-
-    const char* shaderCode = code.c_str();
-    int success;
-    char infoLog[512];
-
-    shader = glCreateShader(shaderType);
-    glShaderSource(shader, 1, &shaderCode, NULL);
-    glCompileShader(shader);
-
-
-    glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
-    if(!success) {
-        glGetShaderInfoLog(shader, 512, NULL, infoLog);
-        std::cout << "Shader "<< shaderPath <<" compilation error\n" << infoLog;
-        return false;
-    }
-
-    return true;    
+ShaderAsset* MaterialAsset::getShaderAsset() {
+    return ShadersHandler::get_instance()->getAsset(shader);
 }
 
 void MaterialAsset::use() {
-    glUseProgram(this->program);
-}
+    getShaderAsset()->use();
 
-
-void MaterialAsset::setAttributeLocations() {
-    for(std::string& attribute: this->configuration.attributes) {
-        GLuint& location = fixedAttributeLocations[attribute].location;
-        
-        glBindAttribLocation(this->program, location, attribute.c_str());
+    auto textures = getTextureAssets();
+    for(auto texture: textures) {
+        std::get<1>(texture)->use();
     }
-}
 
-void MaterialAsset::setUniformLocations() {
-    for(std::string& uniform: this->configuration.uniforms) {
-        GLuint& location = fixedUniformLocations[uniform].location;
-        std::cout << "binding " << uniform << " to " << location << std::endl;
-        glBindAttribLocation(this->program, location, uniform.c_str());
-        CHECK_GL_ERROR();
-    }
-}
-
-MaterialConfiguration MaterialAsset::getMaterialConfiguration() {
-    return this->configuration;
 }
 
 

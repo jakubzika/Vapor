@@ -6,7 +6,7 @@ Asset::Asset() {
 
 }
 
-bool Asset::loadFromPath(const std::string &path) {
+bool Asset::load(string path) {
     
     std::cout<< "sem grazl\n";
     return false;}

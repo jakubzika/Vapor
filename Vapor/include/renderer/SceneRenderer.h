@@ -7,8 +7,10 @@
 
 #include "../assets/MeshAsset.h"
 #include "../assets/MaterialAsset.h"
+#include "../gl/LightsUBO.h"
 
 #include "../scene/ModelEntity.h"
+#include "../scene/LightEntity.h"
 #include "../scene/Scene.h"
 #include "../scene/SceneCamera.h"
 
@@ -28,7 +30,20 @@ class SceneRenderer : public SceneRenderingInstance {
     void render();
 
     void addMesh(MeshAsset*,MaterialAsset*,ModelData* data);
+
+    void addSunLight(SunLightData*);
+    void addPointLight(PointLightData*);
+    void addSpotLight(SpotLightData*);
+
     void setCamera(CameraData* cameraData);
+
+    void clearData();
+    
+    void beforeGather();
+    void afterGather();
+    
+    void beforeDataUpdate();
+    void afterDataUpdate();
     private:
 
     void renderModels();
@@ -40,7 +55,15 @@ class SceneRenderer : public SceneRenderingInstance {
     UniformData uniformData;
 
     MeshMaterialModelMap models;
+    
     CameraData* camera;
+
+    bool dirtyLightsData;
+    std::vector<SunLightData*> sunLights;
+    std::vector<PointLightData*> pointLights;
+    std::vector<SpotLightData*> spotLights;
+
+    LightsUBO lightsUBO;
 
 };
 

@@ -24,8 +24,10 @@ set(SOURCE_FILES_
     "src/Util.cpp"
     "src/Types.cpp"
     "src/renderer/SceneRenderingInstance.cpp"
+    "src/gl/LightsUBO.cpp"
     
     "src/scene/ModelEntity.cpp"
+    "src/scene/LightEntity.cpp"
     "src/scene/SceneEntity.cpp"
     "src/scene/SceneObject.cpp"
     "src/scene/SceneNode.cpp"
@@ -47,6 +49,7 @@ set(SOURCE_FILES_
     "src/action/UserCameraAction.cpp"
     "src/action/GLUTCaptureMouseSwitchAction.cpp"
     "src/action/EntityHovering.cpp"
+    "src/action/RotatingLight.cpp"
 )
 
 set(HEADER_FILES
@@ -64,6 +67,7 @@ set(HEADER_FILES
     "include/stb/stb_image.h"
     "include/Types.h"
     "include/gl/VecHash.h"
+    "include/gl/LightsUBO.h"
     "include/Util.h"
 
     "include/scene/SceneObject.h"
@@ -72,6 +76,7 @@ set(HEADER_FILES
     "include/scene/Scene.h"
     "include/scene/SceneCamera.h"
     "include/scene/ModelEntity.h"
+    "include/scene/LightEntity.h"
 
     "include/input/UserInput.h"
     "include/input/GLUTUserInput.h"
@@ -92,6 +97,7 @@ set(HEADER_FILES
     "include/action/UserCameraAction.h"
     "include/action/EntityHovering.h"
     "include/action/GLUTCaptureMouseSwitchAction.h"
+    "include/action/RotatingLight.h"
     )
 
 # file(GLOB SOURCE "src/*.cpp" "include/*.h")
