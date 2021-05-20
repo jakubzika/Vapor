@@ -1,3 +1,14 @@
+/**
+ * \file       Engine.h
+ * \author     Jakub Zíka
+ * \date       2020/20/5
+ * \brief      description
+ *
+ *  Engine  orchestrates data preparation for rendering and the loop itself
+ *  and managing registerable action plugins with custom functionality
+ *
+*/
+
 #pragma once
 
 #include <chrono>
@@ -21,7 +32,13 @@ class Engine : public IWindowRenderer{
     void loop();
     void init();
 
+    /**
+     * @brief Registers new action
+     * 
+     * @param action 
+     */
     void registerAction(IAction* action);
+    
     SceneRenderer* getRenderer();
 
     private:

@@ -1,3 +1,13 @@
+/**
+ * \file       MeshAsset.h
+ * \author     Jakub Zíka
+ * \date       2020/20/5
+ * \brief      description
+ *
+ *  Asset for meshes
+ *
+*/
+
 #pragma once
 
 #include <iostream>
@@ -32,6 +42,17 @@ class MeshAsset: public Asset {
   public:
     bool load(string path) override;
 
+    /**
+     * @brief Allow loading model manualy through passing buffers. Bypassing asset handler 
+     * 
+     * @param numAttribs 
+     * @param numVertices 
+     * @param numTriangles 
+     * @param vertices 
+     * @param triangles 
+     * @return true 
+     * @return false 
+     */
     bool loadFromBuffer(int numAttribs,int  numVertices,int numTriangles,const float* vertices,const unsigned* triangles);
     // bool loadFromConfiguration(json configuration);
     // bool loadFromBuffer(void * data,std::size_t dataSize);

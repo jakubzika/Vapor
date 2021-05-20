@@ -1,3 +1,14 @@
+/**
+ * \file       SelectableItems.h
+ * \author     Jakub Zíka
+ * \date       2020/20/5
+ * \brief      Action for handling filling of the pool
+ *
+ *  Small state machine implementation which handles interaction with valve.
+ *  Clicking the valve causes the pool to fill and water filling streams to show up. Again clicking it empties the pool.
+ *
+*/
+
 #pragma once
 
 #include "pgr.h"

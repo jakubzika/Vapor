@@ -1,3 +1,13 @@
+/**
+ * \file       UnitCube.h
+ * \author     Jakub Zíka
+ * \date       2020/20/5
+ * \brief      description
+ *
+ *  Constant model defined in C++ code
+ *
+*/
+
 #pragma once
 
 namespace vpr::models {

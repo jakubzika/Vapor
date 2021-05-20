@@ -1,3 +1,14 @@
+/**
+ * \file       UserCameraAction.h
+ * \author     Jakub Zíka
+ * \date       2020/20/5
+ * \brief      description
+ *
+ *  Handles user interaction and movement of camera. As well as reading keys which trigger different camera states.
+ *  Contains 2 static view, 1 free view and one rotating around scene(which can count as object moving around circle :-) )
+ *
+*/
+
 #pragma once
 
 #include <iostream>

@@ -67,43 +67,28 @@ layout (std140) uniform lights {
     int num_spot_lights;
 };
 
-// layout(location = 0)uniform float time;
 
-vec3 calcSunLight(SunLight light, vec3 normal, vec3 position, vec2 uv, vec3 view_direction, vec3 color){
-    
-    // vec3 reflect_direction = reflect(-light.angle.xyz, normal);  
-
-    // float specular = pow(max(dot(view_direction, reflect_direction), 0.0), 32);
-    
-    // return max(dot(normalize(normal),normalize(position + light.angle.xyz)),0.0) + light.strength*specular;
-
+vec3 calculate_sun_light(SunLight light, vec3 normal, vec3 position, vec2 uv, vec3 view_direction, vec3 color){
     vec3 light_direction = normalize(-light.angle.xyz);
-    // diffuse shading
     float diff = max(dot(normal, light_direction), 0.0);
-    // specular shading
     vec3 reflect_direction = reflect(-light_direction, normal);
     float spec = pow(max(dot(view_direction, reflect_direction), 0.0), roughness);
-    // combine results
     vec3 ambient  = vec3(color)*0.2;
     vec3 diffuse  = diff * vec3(color)*0.3;
     vec3 specular = spec * vec3(0.2);
     return (ambient + diffuse + specular)*vec3(light.color)*0.5;
 }
 
-vec3 calcPointLight(PointLight light, vec3 normal, vec3 position, vec2 uv, vec3 view_direction, vec3 color) {
+vec3 calculate_point_light(PointLight light, vec3 normal, vec3 position, vec2 uv, vec3 view_direction, vec3 color) {
 
 
     vec3 light_direction = normalize(light.position.xyz - position);
-    // diffuse shading
     float diff = max(dot(normal, light_direction), 0.0);
-    // specular shading
     vec3 reflect_direction = reflect(-light_direction, normal);
     float spec = pow(max(dot(view_direction, reflect_direction), 0.0), 1.0);
-    // attenuation
     float distance    = length(light.position.xyz - position);
     float attenuation = 1.0 / (light.attentuation.x + light.attentuation.y * distance + 
   			     light.attentuation.z * (distance * distance));    
-    // combine results
     vec3 ambient  = vec3(color)*0.05;
     vec3 diffuse  = diff * vec3(color)*0.8;
     vec3 specular = spec * color * vec3(color) * 1.0;
@@ -113,7 +98,7 @@ vec3 calcPointLight(PointLight light, vec3 normal, vec3 position, vec2 uv, vec3 
     return (ambient + diffuse + specular)* light.color.xyz * 0.3;
 }
 
-vec3 calcSpotLight(SpotLight light,vec3 normal, vec3 position, vec2 uv, vec3 view_direction, vec3 color) {
+vec3 calculate_spot_light(SpotLight light,vec3 normal, vec3 position, vec2 uv, vec3 view_direction, vec3 color) {
     vec3 light_direction = normalize(light.position.xyz - position);
 
     float theta     = dot(light_direction, normalize(-light.angle.xyz));
@@ -154,27 +139,17 @@ void main()
 
     vec3 color = color_texture_color.rgb*0.2;
     for(int i = 0; i < num_sun_lights; i++) {
-        color += calcSunLight(sun_lights[i], norm, position_f, uv_frame, view_direction, color_texture_color.rgb);
+        color += calculate_sun_light(sun_lights[i], norm, position_f, uv_frame, view_direction, color_texture_color.rgb);
     }
 
     for(int i = 0; i < num_point_lights; i++) {
-        color += calcPointLight(point_lights[i], normal_f, position_f,uv_frame, view_direction, color_texture_color.rgb);
+        color += calculate_point_light(point_lights[i], normal_f, position_f,uv_frame, view_direction, color_texture_color.rgb);
     }
 
     for(int i = 0; i < num_spot_lights; i++) {
-        color += calcSpotLight(spot_lights[i], normal_f, position_f,uv_frame, view_direction, color_texture_color.rgb);
+        color += calculate_spot_light(spot_lights[i], normal_f, position_f,uv_frame, view_direction, color_texture_color.rgb);
     }
 
-    // if((available_textures & 128u) > 0u) {
-    //     transparency = texture(color_texture, uv_frame).a;
-    //     diffuse = diffuseStrength*texture(color_texture, uv_frame);
-    // } else {
-    //     diffuse = diffuseStrength*vec4(0.7412, 0.7412, 0.7412,1.0);
-    // }
-    // fragmentColor = vec4(sin(nu.x*0.1)*0.5+0.5,cos(nu.y*0.1)*0.5+0.5,0.1,1.0f);
-    // vec4 color = (vec4(ambient,1.0) + diffuse)*vec4(0.78, 0.79, 0.71,1.0);
-
-    
     if((available_textures & 2u) > 0u) {
         vec3 I = normalize(position_f - view_pos);
         vec3 R = reflect(I, normalize(normal_f));
@@ -187,8 +162,6 @@ void main()
     }
 
     fragmentColor = vec4(color.rgb, max(transparency,0.0));
-
-    
 
     // float gamma = 2.2;
     // fragmentColor.rgb = pow(fragmentColor.rgb, vec3(1.0/gamma));

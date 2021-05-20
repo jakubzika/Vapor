@@ -1,3 +1,14 @@
+/**
+ * \file       MaterialAsset.h
+ * \author     Jakub Zíka
+ * \date       2020/20/5
+ * \brief      description
+ *
+ *  Material asset containing information about materials, their configuration(alpha, animation, etc..) and textures it has
+ *  
+ *
+*/
+
 #pragma once
 
 #include "pgr.h"

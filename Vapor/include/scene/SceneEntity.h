@@ -1,3 +1,13 @@
+/**
+ * \file       SceneEntity.h
+ * \author     Jakub Zíka
+ * \date       2020/20/5
+ * \brief      description
+ *
+ *  Base class defining object which is positioned in scene. Tree traversal gathers rendering data and also updates data (position, normals, etc...).
+ *
+*/
+
 #pragma once
 #include <iostream>
 #include "SceneObject.h"

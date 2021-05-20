@@ -1,3 +1,13 @@
+/**
+ * \file       GLBuffer.h
+ * \author     Jakub Zíka
+ * \date       2020/20/5
+ * \brief      description
+ *
+ *  Abstraction for OpenGL buffer
+ *
+*/
+
 #pragma once
 
 #include <vector>
@@ -49,14 +59,7 @@ GLBuffer<T>::GLBuffer(std::vector<T> data, std::size_t unitSize, GLenum type) {
 template<typename T>
 GLBuffer<T>::~GLBuffer() {
 
-
 }
-
-
-// template<typename T>
-// GLBuffer<T>::GLBuffer(std::vector<T> data, std::size_t unitSize) {
-//     GLBuffer<T>::GLBuffer(data,unitSize, ARRAY_BUFFER);
-// }
 
 template<typename T>
 std::size_t GLBuffer<T>::getSize() {

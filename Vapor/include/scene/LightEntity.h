@@ -1,3 +1,13 @@
+/**
+ * \file       LightEntity.h
+ * \author     Jakub Zíka
+ * \date       2020/20/5
+ * \brief      description
+ *
+ *  Light entity in scene.
+ *
+*/
+
 #pragma once
 
 #include "pgr.h"

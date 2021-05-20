@@ -1,3 +1,15 @@
+/**
+ * \file       Types.h
+ * \author     Jakub Zíka
+ * \date       2020/20/5
+ * \brief      description
+ *
+ *  Contains all sorts of application constants, not only data.
+ * Defines uniforms, attributes, UBO available in Vapor. And mapping between different representations of the information.
+ * For json parsing
+ *
+*/
+
 #pragma once
 
 #include <map>
@@ -6,8 +18,6 @@
 #include <cstdint>
 
 #include "pgr.h"
-// #include "assets/AssetHandler.h"
-// #include "assets/MeshAsset.h"
 
 using std::string;
 

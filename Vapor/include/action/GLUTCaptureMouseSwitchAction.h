@@ -1,3 +1,13 @@
+/**
+ * \file       GLUTCaptureMouseSwitchAction.h
+ * \author     Jakub Zíka
+ * \date       2020/20/5
+ * \brief      description
+ *
+ *  depreceated- not in use
+ *
+*/
+
 #pragma once
 
 #include "../input/UserInput.h"

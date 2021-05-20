@@ -1,3 +1,15 @@
+/**
+ * \file       Asset.h
+ * \author     Jakub Zíka
+ * \date       2020/20/5
+ * \brief      description
+ *
+ *  Abstrat asset definition
+ * 
+ * Each asset defines its configuration, whose values must json asset definition files contain
+ *
+*/
+
 #pragma once
 
 #include <iostream>
@@ -9,6 +21,8 @@ using json = nlohmann::json;
 
 namespace vpr {
 
+
+// unused, still afraid to delete
 enum AssetType {
   FILE_ASSET,
   HARDCODED_ASSET
@@ -18,13 +32,19 @@ class Asset {
   public:
     Asset();
 
+    /**
+     * @brief Loads asset with specified name
+     * 
+     * @param path asset name, must be present in AssetHandler
+     * @return true 
+     * @return false 
+     */
     virtual bool load(std::string path);
-    // virtual bool loadFromConfiguration(json confifuration);
 
-    // virtual bool loadFromBuffer(void * data,std::size_t dataSize);
 
-    // void reload(); // TODO: implement
     AssetType getType() {return assetType;}
+
+
     AssetTypeId getId() { return id;}
     void setId(AssetTypeId id) {this->id = id;}
 

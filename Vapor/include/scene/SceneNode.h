@@ -1,3 +1,13 @@
+/**
+ * \file       SceneNode.h
+ * \author     Jakub Zíka
+ * \date       2020/20/5
+ * \brief      description
+ *
+ *  Does not render. Branches in scene graph.
+ *
+*/
+
 #pragma once
 
 #include <vector>

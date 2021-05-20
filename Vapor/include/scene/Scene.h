@@ -1,3 +1,14 @@
+/**
+ * \file       Scene.h
+ * \author     Jakub Zíka
+ * \date       2020/20/5
+ * \brief      description
+ *
+ *  Contains all data about the current scene.
+ *  In theory this is how levels could be deinfed.
+ *
+*/
+
 #pragma once
 
 #include <vector>

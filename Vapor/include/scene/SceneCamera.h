@@ -1,3 +1,13 @@
+/**
+ * \file       SceneCamre.h
+ * \author     Jakub Zíka
+ * \date       2020/20/5
+ * \brief      description
+ *
+ *  Camera in scene
+ *
+*/
+
 #pragma once
 
 #include "pgr.h"

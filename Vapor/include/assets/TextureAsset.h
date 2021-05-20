@@ -1,3 +1,13 @@
+/**
+ * \file       TextureAsset.h
+ * \author     Jakub Zíka
+ * \date       2020/20/5
+ * \brief      description
+ *
+ *  Texture asset
+ *
+*/
+
 #pragma once
 #include "Asset.h"
 

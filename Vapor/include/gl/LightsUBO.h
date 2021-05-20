@@ -1,3 +1,14 @@
+/**
+ * \file       LightsUBO.h
+ * \author     Jakub Zíka
+ * \date       2020/20/5
+ * \brief      description
+ *
+ *  Handles global uniform buffer object for lights data.
+ *  Contains structures which are padded and ready to be copied into the GPU
+ *
+*/
+
 #pragma once
 #include <vector>
 #include <stdio.h>
@@ -8,6 +19,7 @@
 
 namespace vpr {
 
+// enforce strict consistent packing
 #pragma pack(push, 1)
 #define SUN_LIGHT_DATA_SIZE_PADDED 48
 struct SunLightData {

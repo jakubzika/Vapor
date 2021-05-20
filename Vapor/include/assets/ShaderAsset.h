@@ -1,3 +1,13 @@
+/**
+ * \file       ShaderAsset.h
+ * \author     Jakub Zíka
+ * \date       2020/20/5
+ * \brief      description
+ *
+ *  Shader asset
+ *
+*/
+
 #pragma once
 #include "Asset.h"
 #include "pgr.h"
@@ -31,8 +41,22 @@ class ShaderAsset : public Asset {
     ShaderConfiguration configuration;
 
 
+    /**
+     * @brief Binds uniforms to positions defined , alhough its not needed i think :)
+     * 
+     */
     void setUniformLocations();
+
+    /**
+     * @brief Binds attributes to predefined locations from Types.h
+     * 
+     */
     void setAttributeLocations();
+
+    /**
+     * @brief Binds Uniform buffer object to predefined locations
+     * 
+     */
     void bindUniformBufferObjectLocations();
 
     string fragmentShaderPath;

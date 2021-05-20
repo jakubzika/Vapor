@@ -1,3 +1,13 @@
+/**
+ * \file       .h
+ * \author     Jakub Zíka
+ * \date       2020/20/5
+ * \brief       deprecated
+ *
+ *  deprecated - not in use
+ *
+*/
+
 #pragma once
 
 #include "pgr.h"

@@ -1,3 +1,13 @@
+/**
+ * \file       GLUTKeyMapping.h
+ * \author     Jakub Zíka
+ * \date       2020/20/5
+ * \brief      description
+ *
+ *  Mapping between GLUT's key enums and Vapor's internal library independent enum key representation
+ *
+*/
+
 #pragma once
 
 #include <map>

@@ -1,3 +1,14 @@
+/**
+ * \file       .h
+ * \author     Jakub Zíka
+ * \date       2020/20/5
+ * \brief      description
+ *
+ *  Interface for being passed as context to GLUTCallbackRegistry
+ *
+*/
+
+
 #pragma once
 
 namespace vpr {
@@ -16,10 +27,6 @@ class GLUTInputsHandler {
 
 
 };
-
-// void GLUTInputsHandler::onKeyboardEvent(unsigned char key,int x, int y){}
-// void GLUTInputsHandler::onMouseMove(int x, int y){}
-// void GLUTInputsHandler::onMousePress(int button, int state, int x, int y){}x`
 
 }
 

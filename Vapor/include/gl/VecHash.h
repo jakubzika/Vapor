@@ -1,8 +1,21 @@
+/**
+ * \file       VecHash.h
+ * \author     Jakub Zíka
+ * \date       2020/20/5
+ * \brief      description
+ *
+ *  Makes vector storable into map as key
+ * 
+ * source: stackoverflow
+ *
+*/
+
 #pragma once
 
 #include "pgr.h"
 
 namespace vpr {
+
 
 struct KeyFuncs
 {

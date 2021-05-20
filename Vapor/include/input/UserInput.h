@@ -1,3 +1,13 @@
+/**
+ * \file       UserInput.h
+ * \author     Jakub Zíka
+ * \date       2020/20/5
+ * \brief      description
+ *
+ *  Interface clas for input handling, and data strcuture definition which is used throughout Vapor
+ *
+*/
+
 #pragma once
 
 #include <map>

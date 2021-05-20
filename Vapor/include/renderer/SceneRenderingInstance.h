@@ -1,3 +1,13 @@
+/**
+ * \file       SceneRenderingInstancee.h
+ * \author     Jakub Zíka
+ * \date       2020/20/5
+ * \brief      description
+ *
+ *  Interface for interactions between Scene and Renderer
+ *
+*/
+
 #pragma once
 
 #include "../Types.h"

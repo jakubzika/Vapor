@@ -1,3 +1,13 @@
+/**
+ * \file       Singleton.h
+ * \author     Jakub Zíka
+ * \date       2020/20/5
+ * \brief      description
+ *
+ *  Template definition for singleton used in AssetHandler
+ *
+*/
+
 #pragma once
 
 template <class T> class Singleton

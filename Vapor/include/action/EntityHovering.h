@@ -1,3 +1,13 @@
+/**
+ * \file       EntityHovering.h
+ * \author     Jakub Zíka
+ * \date       2020/20/5
+ * \brief      Engine action for hovering item effect
+ *
+ *  Engine action for hovering item effect
+ *
+*/
+
 #pragma once
 
 #include "pgr.h"

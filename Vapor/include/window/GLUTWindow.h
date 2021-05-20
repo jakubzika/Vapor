@@ -1,3 +1,13 @@
+/**
+ * \file       GLUTWindow.h
+ * \author     Jakub Zíka
+ * \date       2020/20/5
+ * \brief      description
+ *
+ *  Implementation of Window for GLUT library. Contains static functions due to glut not being able to access dynamic data. Only constant.
+ *
+*/
+
 #pragma once
 
 

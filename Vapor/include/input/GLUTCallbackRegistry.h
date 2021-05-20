@@ -1,3 +1,14 @@
+/**
+ * \file       .h
+ * \author     Jakub Zíka
+ * \date       2020/20/5
+ * \brief      description
+ *
+ *  Bypassing the issue with glut that its callbacks cannot contain class functions. Only pure functions, which static functions kind of are.
+ *  Binds member methods of this class to glut. On event passes the events to non-static whatewer context. 
+ *
+*/
+
 #pragma once
 
 

@@ -1,3 +1,13 @@
+/**
+ * \file       ModelEntity.h
+ * \author     Jakub Zíka
+ * \date       2020/20/5
+ * \brief      description
+ *
+ *  Model entity in scene.
+ *
+*/
+
 #pragma once
 
 #include "pgr.h"

@@ -1,3 +1,14 @@
+/**
+ * \file       GLUTUserInput.h
+ * \author     Jakub Zíka
+ * \date       2020/20/5
+ * \brief      description
+ *
+ *  keyboard handler for glut library
+ *
+*/
+
+
 #pragma once
 
 #include "pgr.h"

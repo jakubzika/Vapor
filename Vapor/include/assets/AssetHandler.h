@@ -1,3 +1,13 @@
+/**
+ * \file       AssetHandler.h
+ * \author     Jakub Zíka
+ * \date       2020/20/5
+ * \brief      description
+ *
+ *  Handler for handling
+ *
+*/
+
 #pragma once
 
 
@@ -15,6 +25,10 @@
 
 namespace vpr {
 
+/**
+ * @brief generic asset handler for loading assets from file system
+ * 
+ */
 template<class AssetType> class AssetHandler: public Singleton<AssetHandler<AssetType>> {
 
     public:
@@ -22,28 +36,125 @@ template<class AssetType> class AssetHandler: public Singleton<AssetHandler<Asse
 
     AssetHandler();
 
+    /**
+     * @brief Creates empty asset with specified id
+     * 
+     * @param id 
+     * @return AssetType* 
+     */
     AssetType* create(AssetTypeId id);
-
+    
+    /**
+     * @brief Get the Asset object by name
+     * 
+     * @param name asset name
+     * @return AssetType* 
+     */
     AssetType* getAsset(string name);
+
+    /**
+     * @brief Get the Asset object by id
+     * 
+     * @param id 
+     * @return AssetType* 
+     */
     AssetType* getAsset(AssetTypeId id);
 
-    bool isAvailable(string);
-    bool isAvailable(AssetTypeId);
+    /**
+     * @brief Checks if given asset name is available
+     * @param name asset name
+     * @return true 
+     * @return false 
+     */
+    bool isAvailable(string name);
 
-    bool isLoaded(AssetTypeId);
-    bool isLoaded(string);
+    /**
+     * @brief Checks if given asset id is available
+     * @param id asset id
+     * @return true 
+     * @return false 
+     */
+    bool isAvailable(AssetTypeId id);
 
+    /**
+     * @brief Checks if asset has been loaded or is yet waiting to be loaded
+     * @param id asset id
+     * @return true 
+     * @return false 
+     */
+    bool isLoaded(AssetTypeId id);
+
+    /**
+     * @brief Checks if asset has been loaded or is yet waiting to be loaded
+     * @param name asset name
+     * @return true 
+     * @return false 
+     */
+    bool isLoaded(string name);
+
+    /**
+     * @brief Get the Id of asset from asset name
+     * 
+     * @param name 
+     * @return AssetTypeId 
+     */
     AssetTypeId getId(string name);
+
+    /**
+     * @brief Get the name of asset from asset Id
+     * 
+     * @param id 
+     * @return string 
+     */
     string getName(AssetTypeId id);
 
+    /**
+     * @brief Deletes specified asset 
+     * 
+     * @param id 
+     */
     void deleteAsset(AssetTypeId id);
-    void deleteAsset(AssetType *);
 
+    /**
+     * @brief Deletes specified asset
+     * 
+     * @param asset 
+     */
+    void deleteAsset(AssetType* asset);
+
+    /**
+     * @brief Set the Base Path to the directory which will the AssetHandler scan for available assets
+     * 
+     */
     void setBasePath(string);
+
+    /**
+     * @brief Set the File Extension of the asset file for which the handler will look for
+     * 
+     */
     void setFileExtension(string);
+
+    /**
+     * @brief Scand base path folder for folders with files with set exteinson
+     * 
+     */
     void loadAvailableAssets();
+
+    /**
+     * @brief Adds asset
+     * 
+     * @return true 
+     * @return false 
+     */
     bool addAvailableAsset(string);
 
+    /**
+     * @brief Add asset manually which is not present in resource folders
+     * 
+     * @param asset 
+     * @param name 
+     * @return AssetTypeId 
+     */
     AssetTypeId addAssetManually(AssetType* asset,string name);
 
     private:
