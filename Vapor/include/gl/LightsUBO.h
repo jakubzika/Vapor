@@ -13,7 +13,7 @@ namespace vpr {
 struct SunLightData {
     glm::vec4 color;
     glm::vec4 angle;
-    float strength;
+    float strength{0};
 
     float padding[3];
 }; 
@@ -23,7 +23,7 @@ struct PointLightData {
     glm::vec4 position;
     glm::vec4 color;
     glm::vec4 attentuation;
-    float strength;
+    float strength{0};
 
     float padding[3];
 };
@@ -34,7 +34,7 @@ struct SpotLightData {
     glm::vec4 position;
     glm::vec4 angle;
     glm::vec4 cone;
-    float strength;
+    float strength{0};
     
     float padding[3];
     

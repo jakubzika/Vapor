@@ -6,8 +6,6 @@
 
 namespace vpr {
 
-
-
 struct UserInput {
     int mouseX{0}, mouseY{0};
     int deltaMouseX{0}, deltaMouseY{0};

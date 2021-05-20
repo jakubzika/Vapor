@@ -1,6 +1,7 @@
 #pragma once
 
 #include <map>
+#include <utility> 
 #include <filesystem>
 #include <cstdint>
 
@@ -69,7 +70,13 @@ struct UniformAttributeDescription {
     unsigned short locationsSize;
 };
 
-static UniformAttributeDescription timeUniform{"time", GL_FLOAT,0, 1};
+static UniformAttributeDescription timeUniform{"time", GL_FLOAT,112, 1};
+static UniformAttributeDescription AnimationUniform{"animated", GL_BOOL,2, 1};
+static UniformAttributeDescription NumFramesUniform{"num_frames", GL_UNSIGNED_INT,3, 1};
+static UniformAttributeDescription FrameLengthUniform{"frame_length", GL_FLOAT,4, 1};
+static UniformAttributeDescription FrameWidthUniform{"frame_width", GL_FLOAT,5, 1};
+static UniformAttributeDescription ViewPositionUniform{"view_pos", GL_FLOAT_VEC3,6, 4};
+
 static UniformAttributeDescription ProjectionUniform{"projection", GL_FLOAT_MAT4,10, 20};
 static UniformAttributeDescription ViewUniform{"view", GL_FLOAT_MAT4,30, 20};
 static UniformAttributeDescription ModelUniform{"model", GL_FLOAT_MAT4,50, 20};
@@ -82,13 +89,20 @@ static UniformAttributeDescription SpecularTextureUniform{"specular_texture", GL
 static UniformAttributeDescription RoughnessTextureUniform{"roughness_texture", GL_INT,94, 1};
 static UniformAttributeDescription MetalnessTextureUniform{"metalness_texture", GL_INT,95, 1};
 static UniformAttributeDescription ReflectionTextureUniform{"reflection_texture", GL_INT,96, 1};
+static UniformAttributeDescription SkyboxTextureUniform{"skybox_texture", GL_INT,97, 1};
+static UniformAttributeDescription IrradianceTextureUniform{"irradiance_texture", GL_INT,98, 1};
+
+static UniformAttributeDescription RoughnessUniform{"roughness", GL_FLOAT,110, 1};
+static UniformAttributeDescription MetalnessUniform{"metalness", GL_FLOAT,111, 1};
+static UniformAttributeDescription AlphaUniform{"alpha", GL_FLOAT,113, 1};
+static UniformAttributeDescription FogUniform{"fog", GL_BOOL,114, 1};
+
 
 
 struct UniformData {
     GLfloat time;
     glm::mat4 PVM;
-    glm::mat3 PVM_inverse;
-    
+    glm::mat3 PVM_inverse;  
 };
 
 // static UniformAttributeDescription timeUniform{"time", GL_FLOAT,0, 1};
@@ -106,6 +120,18 @@ static std::map<std::string, UniformAttributeDescription> fixedUniformLocations 
     {RoughnessTextureUniform.name, RoughnessTextureUniform},
     {MetalnessTextureUniform.name, MetalnessTextureUniform},
     {ReflectionTextureUniform.name, ReflectionTextureUniform},
+    {SkyboxTextureUniform.name, SkyboxTextureUniform},
+    {IrradianceTextureUniform.name, IrradianceTextureUniform},
+    {AlphaUniform.name, AlphaUniform},
+    {AnimationUniform.name, AnimationUniform},
+    {NumFramesUniform.name, NumFramesUniform},
+    {FrameLengthUniform.name, FrameLengthUniform},
+    {FrameWidthUniform.name, FrameWidthUniform},
+    {ViewPositionUniform.name, ViewPositionUniform},
+    {RoughnessUniform.name, RoughnessUniform},
+    {MetalnessUniform.name, MetalnessUniform},
+    {AlphaUniform.name, AlphaUniform},
+    {FogUniform.name, FogUniform}
 };
 
 typedef std::uint32_t TextureMask;
@@ -116,32 +142,40 @@ const TextureMask SPECULAR_TEXTURE  = 0b00100000;
 const TextureMask ROUGHNESS_TEXTURE = 0b00010000;
 const TextureMask METALNESS_TEXTURE = 0b00001000;
 const TextureMask REFLECTION_TEXTURE= 0b00000100;
+const TextureMask SKYBOX_TEXTURE    = 0b00000010;
+const TextureMask IRRADIANCE_TEXTURE= 0b00000001; 
 
 static std::map<TextureMask, GLenum> textureMaskToUnits = {
-    {COLOR_TEXTURE, GL_TEXTURE0},
-    {NORMAL_TEXTURE, GL_TEXTURE1},
-    {SPECULAR_TEXTURE, GL_TEXTURE2},
-    {ROUGHNESS_TEXTURE, GL_TEXTURE3},
-    {METALNESS_TEXTURE, GL_TEXTURE4},
-    {REFLECTION_TEXTURE, GL_TEXTURE5}
+    {COLOR_TEXTURE,       GL_TEXTURE0},
+    {NORMAL_TEXTURE,      GL_TEXTURE1},
+    {SPECULAR_TEXTURE,    GL_TEXTURE2},
+    {ROUGHNESS_TEXTURE,   GL_TEXTURE3},
+    {METALNESS_TEXTURE,   GL_TEXTURE4},
+    {REFLECTION_TEXTURE,  GL_TEXTURE5},
+    {SKYBOX_TEXTURE,      GL_TEXTURE6},
+    {IRRADIANCE_TEXTURE,  GL_TEXTURE7},
 };
 
 static std::map<TextureMask, unsigned short> textureMaskToPositions = {
-    {COLOR_TEXTURE, 0},
-    {NORMAL_TEXTURE, 1},
-    {SPECULAR_TEXTURE, 2},
-    {ROUGHNESS_TEXTURE, 3},
-    {METALNESS_TEXTURE, 4},
-    {REFLECTION_TEXTURE, 5},
+    {COLOR_TEXTURE,       0},
+    {NORMAL_TEXTURE,      1},
+    {SPECULAR_TEXTURE,    2},
+    {ROUGHNESS_TEXTURE,   3},
+    {METALNESS_TEXTURE,   4},
+    {REFLECTION_TEXTURE,  5},
+    {SKYBOX_TEXTURE,      6},
+    {IRRADIANCE_TEXTURE,  7},
 };
 
 static std::map<string, TextureMask> textureTypeToMask = {
-    {"COLOR",COLOR_TEXTURE},
-    {"NORMAL",NORMAL_TEXTURE},
-    {"SPECULAR",SPECULAR_TEXTURE},
-    {"ROUGHNESS",ROUGHNESS_TEXTURE},
-    {"METALNESS",METALNESS_TEXTURE},
-    {"REFLECTION", REFLECTION_TEXTURE},
+    {"COLOR",               COLOR_TEXTURE},
+    {"NORMAL",              NORMAL_TEXTURE},
+    {"SPECULAR",            SPECULAR_TEXTURE},
+    {"ROUGHNESS",           ROUGHNESS_TEXTURE},
+    {"METALNESS",           METALNESS_TEXTURE},
+    {"REFLECTION",          REFLECTION_TEXTURE},
+    {"SKYBOX",              SKYBOX_TEXTURE},
+    {"IRRADIANCE",          IRRADIANCE_TEXTURE},
 };
 
 struct UniformBufferObjectDescription {
@@ -243,12 +277,19 @@ typedef AssetHandler<ShaderAsset> ShadersHandler;
 struct ModelData;
 struct MaterialData;
 
+typedef std::pair<AssetTypeId, MeshAsset*> MeshPair;
+typedef std::pair<AssetTypeId, MaterialAsset*> MaterialPair;
+
 typedef std::vector<ModelData*> ModelVector;
-typedef std::map<MaterialAsset*,ModelVector> MaterialModelMap;
-typedef std::map<MeshAsset*,MaterialModelMap> MeshMaterialModelMap;
+typedef std::map<MaterialPair,ModelVector> MaterialModelMap;
+typedef std::map<MeshPair,MaterialModelMap> MeshMaterialModelMap;
 
 #define MAX_SUN_LIGHTS 2
 #define MAX_POINT_LIGHTS 10
 #define MAX_SPOT_LIGHTS 5
 
+#define WINDOW_WIDTH 1000
+#define WINDOW_HEIGHT 1000
+
 }
+

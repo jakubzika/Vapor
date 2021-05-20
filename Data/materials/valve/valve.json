@@ -1,0 +1,9 @@
+{
+    "name": "Valve",
+    "shader": "simple",
+    "roughness": 1000.0,
+    "metalness": 0.0,
+    "textures": {
+        "color": "valve"
+    }
+}

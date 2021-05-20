@@ -1,0 +1,7 @@
+{
+    "name": "water-flow",
+    "mesh": "flow.obj",
+    "type": "SOLID",
+    "material": "water-flow",
+    "attributes": ["position","normal","uv"]
+}

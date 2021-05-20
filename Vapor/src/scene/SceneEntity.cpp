@@ -3,11 +3,11 @@
 namespace vpr {
 
 SceneEntity::SceneEntity() {
-    
+    this->visible = true;
 }
 
 void SceneEntity::generateRenderingData(SceneRenderingInstance& renderer){}
-void SceneEntity::updatePositions(glm::mat4 model, glm::mat3 modelNormals){}
+void SceneEntity::updatePositions(glm::mat4 model, glm::mat3 modelNormals, bool hidden){}
 
 void SceneEntity::setParent(SceneEntity* parent) {
     this->parent = parent;

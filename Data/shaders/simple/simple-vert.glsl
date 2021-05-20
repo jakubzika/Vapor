@@ -28,7 +28,5 @@ void main()
   position_f = (model*vec4(position,1.0)).xyz;
   normal_f = PVM_inverse*normal;
 
-  float offset = sin(time_a);
-
   color.rgb = vec3(position.x/60+0.5,position.y/60,position.z/60+0.5);  
 }

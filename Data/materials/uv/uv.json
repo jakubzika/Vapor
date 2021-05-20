@@ -1,0 +1,12 @@
+{
+    "name": "UV grid",
+    "shader": "simple",
+    "roughness": 100.0,
+    "metalness": 0.0,
+    "textures": {
+        "color": "uv-grid",
+        "none-specular": "column-specular",
+        "none-roughness": "gloss-texture",
+        "none-metalness": "metalness-texture"
+    }
+}

@@ -1,0 +1,7 @@
+{
+    "name": "cylinder",
+    "mesh": "model.obj",
+    "type": "SOLID",
+    "material": "simple",
+    "attributes": ["position","normal","uv"]
+}

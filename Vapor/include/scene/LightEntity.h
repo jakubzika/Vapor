@@ -30,12 +30,12 @@ class LightEntity : public SceneEntity {
     LightEntity(LightType type);
 
     void generateRenderingData(SceneRenderingInstance& renderer);
-    void updatePositions(glm::mat4 model, glm::mat3 modelNormals);
+    void updatePositions(glm::mat4 model, glm::mat3 modelNormals, bool hidden);
 
     void setAttentuation(float, float, float);
     void setAttentuation(glm::vec3);
 
-    void setCone(float);
+    void setCone(float,float);
 
     void setColor(float,float,float);
     void setColor(glm::vec3);

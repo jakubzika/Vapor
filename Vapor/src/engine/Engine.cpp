@@ -19,8 +19,6 @@ void Engine::init() {
     // glutMainLoop();
 }
 
-
-
 void Engine::registerAction(IAction* action) {
     this->actions.push_back(action);
 }
@@ -41,20 +39,25 @@ void Engine::loop() {
         this->inputHandler->postTick();
 
         glutMainLoopEvent();
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
-        this->processActions();
         
 
         this->scene->updateData(renderer);
         this->renderer.render();
+        this->processActions();
 
         glutSwapBuffers();
 
         this->inputHandler->tick();
 
+
         std::this_thread::sleep_for(std::chrono::milliseconds(16));
     }
+}
+
+SceneRenderer* Engine::getRenderer() {
+    return &renderer;
 }
 
 }

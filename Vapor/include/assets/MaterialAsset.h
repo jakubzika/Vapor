@@ -24,11 +24,20 @@ struct MaterialConfiguration {
     string roughnessTexture{""};   
     string metalnessTexture{""};
     string reflectionTexture{""};
+    string skyboxTexture{""};
+    string irradianceTexture{""};
 
     ModelType type;
     float roughness{-1.0f};
     float metalness{-1.0f};
-        
+
+    float alpha{1.0};
+    bool hasAlphaTexture{false};
+
+    bool animated{false};
+    unsigned int numFrames;
+    float frameLength;
+    float frameWidth;
 };
 
 // struct MaterialData {
@@ -59,6 +68,19 @@ class MaterialAsset : public Asset {
     std::vector<std::tuple<TextureMask, TextureAsset*>> getTextureAssets();
 
 
+    float getAlpha() {return alpha;}
+
+    bool hasAlpha() { return alpha != 1.0 || alphaTexture;}
+
+    bool getAnimated() {
+        return animated;}
+    unsigned int getNumFrames() {return animated ? numFrames : 0;}
+    float getFrameLength() {return animated ? frameLength : 0;}
+    float getFrameWidth() {return animated ? frameWidth : 0;}
+
+    float getMetalness() {return metalness;}
+    float getRoughness() {return roughness;}
+
     private:
 
     ModelType modelType;
@@ -69,8 +91,21 @@ class MaterialAsset : public Asset {
     AssetTypeId roughnessTexture{0};
     AssetTypeId metalnessTexture{0};
     AssetTypeId reflectionTexture{0};
+    AssetTypeId skyboxTexture{0};
+    AssetTypeId irradianceTexture{0};
 
     AssetTypeId shader;
+
+    float alpha;
+    bool alphaTexture;
+
+    bool animated{false};
+    unsigned int numFrames;
+    float frameLength;
+    float frameWidth;
+
+    float metalness;
+    float roughness;
 
     MaterialConfiguration configuration;
 

@@ -18,7 +18,7 @@ class SceneNode : public SceneEntity {
     std::vector<SceneEntity*>* getChildren();
 
     void generateRenderingData(SceneRenderingInstance& renderer);
-    void updatePositions(glm::mat4 model, glm::mat3 modelNormals);
+    void updatePositions(glm::mat4 model, glm::mat3 modelNormals, bool hidden);
 
     private:
 

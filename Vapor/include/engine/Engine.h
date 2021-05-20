@@ -22,6 +22,7 @@ class Engine : public IWindowRenderer{
     void init();
 
     void registerAction(IAction* action);
+    SceneRenderer* getRenderer();
 
     private:
     void processActions();

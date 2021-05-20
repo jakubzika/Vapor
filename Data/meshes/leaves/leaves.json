@@ -1,0 +1,7 @@
+{
+    "name": "column",
+    "mesh": "leaves.obj",
+    "type": "SOLID",
+    "material": "simple-material",
+    "attributes": ["position","normal","uv"]
+}

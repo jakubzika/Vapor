@@ -1,0 +1,7 @@
+{
+    "name": "plane",
+    "mesh": "plane.obj",
+    "type": "SOLID",
+    "material": "uv",
+    "attributes": ["position","normal","uv"]
+}

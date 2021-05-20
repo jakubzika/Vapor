@@ -1,0 +1,13 @@
+{
+    "shader": "simple",
+    "roughness": 2.0,
+    "metalness": 0.0,
+    "textures": {
+        "color": "water-splashing"
+    },
+    "animated": true,
+    "num-frames": 8,
+    "frame-length": 4.0,
+    "frame-width": 0.125,
+    "alpha-texture": true
+}

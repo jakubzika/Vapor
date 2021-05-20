@@ -2,9 +2,16 @@
 
 namespace vpr {
 
-UserCameraAction::UserCameraAction(SceneCamera* camera, UserInput* input) {
+UserCameraAction::UserCameraAction(SceneCamera* camera, UserInput* input, UserInputHandler* handler) {
     this->camera = camera;
     this->input = input;
+    this->handler = handler;
+
+    camera->setPosition(VIEW_STATIC_1_POSITION);
+    camera->setCenter(VIEW_STATIC_1_CENTER);
+    camera->setFOV(VIEW_STATIC_1_FOV);
+    pitch = -2.4f;
+    yaw = 42.0f;
 }
 
 void UserCameraAction::handleMouse() {
@@ -21,7 +28,6 @@ void UserCameraAction::handleMouse() {
     if(pitch < -89.0f)
         pitch = -89.0f;
 
-    
     this->direction.x = cos(glm::radians(yaw))*cos(glm::radians(pitch));
     this->direction.y = sin(glm::radians(pitch));
     this->direction.z = sin(glm::radians(yaw))*cos(glm::radians(pitch));
@@ -30,17 +36,98 @@ void UserCameraAction::handleMouse() {
 }
 
 void UserCameraAction::handleKeyboard() {
-    auto center = camera->getCenter();
-    auto position = camera->getPosition();
+    time++;
     
 
+    bool cameraKeyPressed = false;
+    if((this->input->keyPressed[VPR_KEY_C] && this->input->deltaKeyPressed[VPR_KEY_C])) {
+        // this->handler->setLockedCursor(true);
+        cameraKeyPressed = true;
+           
+    }
+    auto center = camera->getCenter();
+    auto position = camera->getPosition();
+    glm::vec3 newPosition, newCenter;
+    bool shouldMove = false;
 
-    if(input->keyPressed[VPR_KEY_W]) {
-        camera->setPosition(position + (this->direction*0.2f));
-        camera->setCenter(center + (this->direction*0.2f));
-    } else if(input->keyPressed[VPR_KEY_S]) {
-        camera->setPosition(position - (this->direction*0.2f));
-        camera->setCenter(center - (this->direction*0.2f));
+
+    float x;
+    float y;
+
+    switch(activeView) {
+        case VIEW_STATIC_1:
+        if(cameraKeyPressed) {
+            std::cout << "Switching camera to VIEW_STATIC_2\n";
+            activeView = VIEW_STATIC_2;
+            camera->setPosition(VIEW_STATIC_2_POSITION);
+            camera->setCenter(VIEW_STATIC_2_CENTER);
+            camera->setFOV(VIEW_STATIC_2_FOV);
+        }
+        break;
+        case VIEW_STATIC_2:
+            if(cameraKeyPressed) {
+                std::cout << "Switching camera to VIEW_FREE\n";
+                activeView = VIEW_FREE;
+                camera->setPosition(freeViewCameraPosition);
+                camera->setCenter(freeViewCameraCenter);
+                camera->setFOV(VIEW_FREE_FOV);
+                handler->setLockedCursor(true);
+            }
+        break;
+        case VIEW_FREE:
+            // std::cout << camera->getPosition().x << "f, " << camera->getPosition().y << "f, " << camera->getPosition().z << "f, - ";
+            // std::cout << camera->getCenter().x << "f, " << camera->getCenter().y << "f, " << camera->getCenter().z << "f, " << std::endl;
+
+            if(cameraKeyPressed) {
+                std::cout << "Switching camera to VIEW_ROTATING\n";
+                activeView = VIEW_ROTATING;
+                freeViewCameraPosition = camera->getPosition();
+                freeViewCameraCenter = camera->getCenter();
+
+                camera->setCenter(VIEW_ROTATING_INITIAL_CENTER);
+                camera->setFOV(VIEW_ROTATING_FOV);
+                handler->setLockedCursor(false);
+                break;
+            }
+
+            if(input->keyPressed[VPR_KEY_W]) {
+                newPosition = position + (this->direction*CAMERA_SPEED);
+                newCenter = center + (this->direction*CAMERA_SPEED);
+                shouldMove = true;
+            } else if(input->keyPressed[VPR_KEY_S]) {
+                newPosition = position - (this->direction*CAMERA_SPEED);
+                newCenter = center - (this->direction*CAMERA_SPEED);
+                shouldMove = true;
+            }
+            // std::cout << "distance from center " << glm::distance(newPosition, glm::vec3(0.0,0.0,0.0)) << std::endl;
+            if(shouldMove  && glm::distance(newPosition, glm::vec3(0.0,0.0,0.0)) < MAX_CAMERA_DISTANCE) {
+                this->camera->setPosition(newPosition);
+                this->camera->setCenter(newCenter);
+            }
+            this->handleMouse();
+
+
+        break;
+        case VIEW_ROTATING:
+            if(cameraKeyPressed) {
+                std::cout << "Switching camera to VIEW_STATIC_1\n";
+                activeView = VIEW_STATIC_1;
+                freeViewCameraPosition = camera->getPosition();
+                freeViewCameraCenter = camera->getCenter();
+
+
+                camera->setPosition(VIEW_STATIC_1_POSITION);
+                camera->setCenter(VIEW_STATIC_1_CENTER);
+                camera->setFOV(VIEW_STATIC_1_FOV);
+                handler->setLockedCursor(false);
+                break;
+            }
+            x = sin(((float)time)/80.0f) * 10.0f;
+            y = cos(((float)time)/80.0f) * 10.0f;
+
+            camera->setPosition(glm::vec3(x,4.0f,y));
+
+        break;
     }
 
     // if(input->keyPressed[VPR_KEY_A]) {
@@ -58,7 +145,6 @@ void UserCameraAction::handleKeyboard() {
 
 
 void UserCameraAction::tick(long msec) {
-    this->handleMouse();
     this->handleKeyboard();
 }
 

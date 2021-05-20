@@ -31,6 +31,8 @@ class MeshAsset: public Asset {
 
   public:
     bool load(string path) override;
+
+    bool loadFromBuffer(int numAttribs,int  numVertices,int numTriangles,const float* vertices,const unsigned* triangles);
     // bool loadFromConfiguration(json configuration);
     // bool loadFromBuffer(void * data,std::size_t dataSize);
 

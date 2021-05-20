@@ -1,0 +1,8 @@
+{
+    "shader": "skybox",
+    "roughness": 0.0,
+    "metalness": 0.0,
+    "textures": {
+        "skybox": "skybox"
+    }
+}

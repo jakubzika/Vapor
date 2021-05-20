@@ -13,7 +13,7 @@ struct CameraData {
 
     glm::mat4 projection;
     
-
+    glm::vec3 position;
 };
 
 class SceneCamera : SceneObject{
@@ -44,7 +44,7 @@ class SceneCamera : SceneObject{
 
     int width;
     int height;
-    float FOV{45.0};
+    float FOV{60.0};
 
     CameraData data;
 

@@ -1,0 +1,14 @@
+{
+    "shader": "simple",
+    "roughness": 2.0,
+    "metalness": 0.0,
+    "textures": {
+        "color": "star-animation",
+        "skybox": "skybox"
+    },
+    "animated": true,
+    "num-frames": 12,
+    "frame-length": 3.0,
+    "frame-width": 0.083,
+    "alpha-texture": true
+}

@@ -30,7 +30,8 @@ void LightEntity::generateRenderingData(SceneRenderingInstance& renderer) {
     }
 }
 
-void LightEntity::updatePositions(glm::mat4 model, glm::mat3 modelNormals) {
+void LightEntity::updatePositions(glm::mat4 model, glm::mat3 modelNormals, bool hidden) {
+    if(hidden || !visible) return;
 switch(type) {
         case LIGHT_SUN:
             sunLightData.angle = glm::vec4(rotation,0.0f);
@@ -62,8 +63,8 @@ void LightEntity::setAttentuation(glm::vec3 attentuation) {
     this->attentuation = attentuation;
 }
 
-void LightEntity::setCone(float cutoff) {
-    this->cone = glm::vec3(cutoff,0.0,0.0);
+void LightEntity::setCone(float cutoff,float outerCutoff) {
+    this->cone = glm::vec3(cutoff,outerCutoff,0.0);
 }
 
 void LightEntity::setColor(float r,float g,float b) {

@@ -1,6 +1,6 @@
 {
     "name": "statue",
-    "mesh": "statue-02.obj",
+    "mesh": "model.obj",
     "type": "SOLID",
     "material": "simple-material",
     "attributes": ["position","normal","uv"]

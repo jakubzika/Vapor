@@ -1,0 +1,6 @@
+{
+    "fragment": "skybox-frag.glsl",
+    "vertex": "skybox-vert.glsl",
+    "uniforms": ["projection","view","skybox_texture","fog"],
+    "attributes": ["position","normal", "uv"]
+}

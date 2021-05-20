@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <map>
 
 #include "pgr.h"
 
@@ -9,6 +10,7 @@
 #include "SceneObject.h"
 #include "SceneEntity.h"
 #include "SceneCamera.h"
+#include "ModelEntity.h"
 
 
 namespace vpr {
@@ -30,15 +32,21 @@ class Scene {
     SceneEntity* getRoot();
 
     void setCamera(SceneCamera* camera);
+    void setSkybox(ModelEntity* skybox);
+
+    unsigned short addSelectableItem(SceneObject*);
     
 
     private:
+
 
     std::vector<SceneObject*> objects;
     
     SceneCamera* camera{nullptr};
     SceneEntity* root{nullptr};
 
+    ModelEntity* skybox{nullptr};
+    
     // camera
 
 };

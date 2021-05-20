@@ -1,0 +1,10 @@
+{
+    "shader": "simple",
+    "roughness": 1.0,
+    "metalness": 0.0,
+    "textures": {
+        "color": "gold",
+        "skybox": "skybox"
+
+    }
+}

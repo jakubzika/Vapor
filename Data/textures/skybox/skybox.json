@@ -1,0 +1,5 @@
+{
+    "kind": "CUBE_MAP",
+    "texture": "skybox_gradient.png",
+    "type": "SKYBOX"
+}

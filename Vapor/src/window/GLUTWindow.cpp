@@ -5,7 +5,12 @@ namespace vpr {
 GLUTWindow *GLUTWindow::instance = nullptr;
 IWindowRenderer *GLUTWindow::windowRendererContext = nullptr;
 
-
+/**
+ * @brief 
+ * 
+ * @param argc 
+ * @param argv 
+ */
 void GLUTWindow::init(int argc, char** argv) {
     
     glutInit(&argc,argv);
@@ -24,9 +29,21 @@ void GLUTWindow::init(int argc, char** argv) {
     glEnable(GL_DEPTH_TEST);
     glViewport(0, 0, glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
     glClearColor(0.2f, 0.7f, 0.7f, 1.0f);
+    glClearStencil(0);
     // glfwWindowHint(GLFW_SAMPLES, 4);
+    
     glEnable(GL_MULTISAMPLE);  
+    // glEnable(GL_MULTISAMPLE);
+    glHint(GL_POLYGON_SMOOTH_HINT, GL_NICEST);
+
+    glEnable(GL_BLEND);    
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); 
+    glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ONE);
     // glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
+    
+    glEnable(GL_CULL_FACE);
+    glCullFace(GL_FRONT);  
+    glFrontFace(GL_CW);  
     GLUTWindow::instance = this;
 
 }

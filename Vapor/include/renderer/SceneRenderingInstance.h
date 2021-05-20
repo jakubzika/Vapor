@@ -20,17 +20,19 @@ class SceneRenderingInstance {
 
     public:
 
-    virtual void beforeGather();
-    virtual void afterGather();
-    virtual void beforeDataUpdate();
-    virtual void afterDataUpdate();
+    virtual void beforeGather() = 0;
+    virtual void afterGather() = 0;
+    virtual void beforeDataUpdate() = 0;
+    virtual void afterDataUpdate() = 0;
 
-    virtual void addMesh(MeshAsset* mesh, MaterialAsset* material, ModelData* data);
-    virtual void setCamera(CameraData* cameraData);
+    virtual void addMesh(MeshAsset* mesh, MaterialAsset* material, ModelData* data) = 0;
+    virtual void setSkybox(MeshAsset* mesh, MaterialAsset* material, ModelData* data) = 0;
+    virtual void setCamera(CameraData* cameraData) = 0;
 
-    virtual void addSunLight(SunLightData*);
-    virtual void addPointLight(PointLightData*);
-    virtual void addSpotLight(SpotLightData*);
+    virtual void addSunLight(SunLightData*) = 0;
+    virtual void addPointLight(PointLightData*) = 0;
+    virtual void addSpotLight(SpotLightData*) = 0;
+    virtual unsigned char addSelectableItem(unsigned int) = 0;
 
     // SceneRenderer* renderer;
 

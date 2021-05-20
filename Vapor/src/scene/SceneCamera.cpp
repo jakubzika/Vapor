@@ -1,4 +1,5 @@
 #include "../../include/scene/SceneCamera.h"
+#include <iostream>
 
 namespace vpr {
 
@@ -54,6 +55,8 @@ void SceneCamera::setFOV(float FOV) {
 }
 
 CameraData* SceneCamera::getCameraData() {
+    // std::cout << " cam: " <<center.x << " " << center.y << " " << center.z << "\n";
+    this->data.position = position;
     return &this->data;
 }
 

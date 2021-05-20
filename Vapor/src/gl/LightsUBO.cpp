@@ -85,11 +85,11 @@ bool LightsUBO::uploadData(std::vector<SunLightData*> &sunLightData, std::vector
     }
 
     for(int i = 0; i < pointLightData.size(); i++) {
-        memcpy(&lightsData.sun_lights[i], pointLightData[i], sizeof(PointLightData));
+        memcpy(&lightsData.point_lights[i], pointLightData[i], sizeof(PointLightData));
     }
 
     for(int i = 0; i < spotLightData.size(); i++) {
-        memcpy(&lightsData.sun_lights[i], spotLightData[i], sizeof(SpotLightData));
+        memcpy(&lightsData.spot_lights[i], spotLightData[i], sizeof(SpotLightData));
     }
 
     glBufferSubData(GL_UNIFORM_BUFFER,0, getSize(), &lightsData);

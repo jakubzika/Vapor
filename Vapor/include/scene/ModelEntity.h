@@ -32,7 +32,13 @@ struct ModelData {
     ShaderAsset* shader;
     TextureMask availableTextures;
     
+    bool selectable;
+    bool visible;
 
+    unsigned char selectableId;
+    unsigned int entityId;
+
+    glm::vec3 position;
 };
 
 
@@ -49,9 +55,13 @@ class ModelEntity : public SceneEntity {
     ModelEntity(AssetTypeId mesh, AssetTypeId material);
     ModelEntity(string meshName, string materialName);
 
-    void generateRenderingData(SceneRenderingInstance& renderer);
-    void updatePositions(glm::mat4 model, glm::mat3 modelNormals);
 
+    std::tuple<MeshAsset*, MaterialAsset*, ModelData*> getData();
+    void generateRenderingData(SceneRenderingInstance& renderer);
+    void updatePositions(glm::mat4 model, glm::mat3 modelNormals,bool hidden);
+
+    void setSelectable(bool selectable) {this->selectable = selectable; }
+    bool getSelectable() {return selectable;}
 
     private:
 
@@ -59,6 +69,8 @@ class ModelEntity : public SceneEntity {
 
     AssetTypeId meshId;
     AssetTypeId materialId;
+
+    bool selectable{false};
     
 };
 

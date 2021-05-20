@@ -44,6 +44,8 @@ template<class AssetType> class AssetHandler: public Singleton<AssetHandler<Asse
     void loadAvailableAssets();
     bool addAvailableAsset(string);
 
+    AssetTypeId addAssetManually(AssetType* asset,string name);
+
     private:
 
     std::filesystem::path basePath;
@@ -77,6 +79,7 @@ AssetType* AssetHandler<AssetType>::create(AssetTypeId id) {
 
     AssetType* asset = (AssetType*)new AssetType();
     assets[id] = asset;
+    asset->setId(id);
 
     return asset;
 }
@@ -223,6 +226,23 @@ bool AssetHandler<AssetType>::isLoaded(AssetTypeId id) {
 template<class AssetType>
 bool AssetHandler<AssetType>::isLoaded(string name) {
     return isLoaded(getId(name));
+}
+
+
+template<class AssetType>
+AssetTypeId AssetHandler<AssetType>::addAssetManually(AssetType* asset, string name) {
+    assert(assetToId.find(name) == assetToId.end());
+
+    AssetTypeId newId = generateId();
+
+    assetToId[name] = newId;
+    availableAssets.insert(newId);
+    loadedAssets.insert(newId);
+    assets[newId] = asset;
+
+    asset->setId(newId);
+
+    return newId;
 }
 
 }

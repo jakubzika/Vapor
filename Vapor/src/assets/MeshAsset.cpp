@@ -54,7 +54,7 @@ bool MeshAsset::load(string configurationPath) {
     std::filesystem::path objPath = p.append(this->configuration.mesh);
     
 
-    std::cout << "opening file " << objPath.string() << std::endl;
+    std::cout << "Loading mesh " << objPath.string() << std::endl;
     std::ifstream file(objPath.c_str(), std::ios::in);
 
     std::vector<glm::vec3> vertexList;
@@ -155,7 +155,6 @@ void MeshAsset::constructVAO() {
 
     for(auto& attributeName: this->configuration.attributes) {
 
-        std::cout << "binding " << attributeName << std::endl;
         this->bindFromName(attributeName);
 
         ShaderAttributeDescription attribute = fixedAttributeLocations[attributeName];
@@ -243,6 +242,48 @@ void MeshAsset::constructBuffers(std::vector<glm::vec3> &vertices,std::vector<gl
 
 void MeshAsset::use() {
     glBindVertexArray(this->VAO);
+}
+
+
+bool MeshAsset::loadFromBuffer(int numAttribs,int  numVertices,int numTriangles, const float* vertices,const unsigned* triangles) {
+    assert(numAttribs == 8);
+
+    this->configuration.attributes.push_back("position");
+    this->configuration.attributes.push_back("normal");
+    this->configuration.attributes.push_back("uv");
+
+    std::vector<uint32_t> indicesVector;
+    std::vector<GLfloat> verticesVector;
+    std::vector<GLfloat> normalsVector;
+    std::vector<GLfloat> uvsVector;
+
+    for(int i = 0; i < numVertices; i++) {
+        int index = i*8;
+        verticesVector.push_back(vertices[index++]);
+        verticesVector.push_back(vertices[index++]);
+        verticesVector.push_back(vertices[index++]);
+
+        normalsVector.push_back(vertices[index++]);
+        normalsVector.push_back(vertices[index++]);
+        normalsVector.push_back(vertices[index++]);
+
+        uvsVector.push_back(vertices[index++]);
+        uvsVector.push_back(vertices[index++]);
+    }
+
+    for(int i = 0; i < numTriangles*3; i++) {
+        indicesVector.push_back(triangles[i]);
+    }
+
+    this->verticesBuffer = new GLBuffer<GLfloat>(verticesVector,3*sizeof(GLfloat),GL_ARRAY_BUFFER);
+    this->normalsBuffer = new GLBuffer<GLfloat>(normalsVector, 3*sizeof(GLfloat),GL_ARRAY_BUFFER);
+    this->uvsBuffer = new GLBuffer<GLfloat>(uvsVector, 2*sizeof(GLfloat),GL_ARRAY_BUFFER);
+    this->indicesBuffer = new GLBuffer<GLuint>(indicesVector, 3*sizeof(GLuint), GL_ELEMENT_ARRAY_BUFFER);
+
+    this->numVertices = indicesVector.size();
+
+    this->constructVAO();
+    return true;
 }
 
 }

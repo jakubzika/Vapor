@@ -156,13 +156,13 @@ void ShaderAsset::setAttributeLocations() {
 void ShaderAsset::setUniformLocations() {
     for(string& uniform: this->configuration.uniforms) {
         GLuint& location = fixedUniformLocations[uniform].location;
-        std::cout << "binding " << uniform << " to " << location << std::endl;
         glBindAttribLocation(this->program, location, uniform.c_str());
         CHECK_GL_ERROR();
     }
 }
 
 void ShaderAsset::use() {
+    // std::cout<<"use shader " << configuration.fragmentShader << std::endl;
     glUseProgram(program);
 }
 

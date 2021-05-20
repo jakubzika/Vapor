@@ -26,6 +26,10 @@ set(SOURCE_FILES_
     "src/renderer/SceneRenderingInstance.cpp"
     "src/gl/LightsUBO.cpp"
     
+    "src/models/UnitCube.cpp"
+    "src/models/Pedestal.cpp"
+
+
     "src/scene/ModelEntity.cpp"
     "src/scene/LightEntity.cpp"
     "src/scene/SceneEntity.cpp"
@@ -42,6 +46,7 @@ set(SOURCE_FILES_
     "src/renderer/SceneRenderer.cpp"
 
     "src/engine/Engine.cpp"
+    "src/engine/State.cpp"
 
     "src/window/Window.cpp"
     "src/window/GLUTWindow.cpp"
@@ -50,6 +55,8 @@ set(SOURCE_FILES_
     "src/action/GLUTCaptureMouseSwitchAction.cpp"
     "src/action/EntityHovering.cpp"
     "src/action/RotatingLight.cpp"
+    "src/action/SelectableItems.cpp"
+    "src/action/UserKeyAction.cpp"
 )
 
 set(HEADER_FILES
@@ -84,6 +91,9 @@ set(HEADER_FILES
     "include/input/GLUTCallbackRegistry.h"
     "include/input/GLUTKeyMapping.h"
 
+    "include/models/UnitCube.h"
+    "include/models/Pedestal.h"
+
 
     "include/renderer/SceneRenderer.h"
     "include/renderer/SceneRenderingInstance.h"
@@ -98,6 +108,8 @@ set(HEADER_FILES
     "include/action/EntityHovering.h"
     "include/action/GLUTCaptureMouseSwitchAction.h"
     "include/action/RotatingLight.h"
+    "include/action/SelectableItems.h"
+    "include/action/UserKeyAction.h"
     )
 
 # file(GLOB SOURCE "src/*.cpp" "include/*.h")

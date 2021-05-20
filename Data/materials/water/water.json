@@ -1,0 +1,10 @@
+{
+    "shader": "simple",
+    "roughness": 20000.0,
+    "metalness": 0.0,
+    "textures": {
+        "color": "water",
+        "skybox-not": "skybox"
+    },
+    "alpha-texture": false
+}

@@ -1,0 +1,7 @@
+{
+    "name": "statue",
+    "mesh": "bathhouse.obj",
+    "type": "SOLID",
+    "material": "simple-material",
+    "attributes": ["position","normal","uv"]
+}

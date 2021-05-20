@@ -14,11 +14,15 @@ class EntityHovering : public IAction {
     void tick(long msec);
     bool isFinished() {return false;}
 
+    void setEnabled(bool);
+    bool getEnabled() {return enabled;}
+
     private:
 
     glm::vec3 startingPosition;
     SceneEntity* entity;
     float time;
+    bool enabled;
 
 };
 

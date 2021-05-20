@@ -12,11 +12,7 @@ GLUTCaptureMouseSwitchAction::GLUTCaptureMouseSwitchAction(UserInput* input, int
 }
 
 void GLUTCaptureMouseSwitchAction::tick(long msec) {
-    if((this->input->keyPressed[VPR_KEY_M] && this->input->deltaKeyPressed[VPR_KEY_M])) {
-        this->handler->setLockedCursor(this->enabled);
-        this->enabled = !this->enabled;   
-           
-    }
+
 }
 
 }

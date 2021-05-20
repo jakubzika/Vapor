@@ -1,0 +1,9 @@
+{
+    "shader": "simple",
+    "roughness": 20.0,
+    "metalness": 0.0,
+    "textures": {
+        "color": "roof",
+        "skybox": "skybox"
+    }
+}

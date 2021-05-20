@@ -1,0 +1,7 @@
+{
+    "name": "bathhouse-water-level",
+    "mesh": "splash.obj",
+    "type": "SOLID",
+    "material": "water-splash",
+    "attributes": ["position","normal","uv"]
+}

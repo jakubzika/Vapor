@@ -1,0 +1,7 @@
+{
+    "name": "column",
+    "mesh": "tree.obj",
+    "type": "SOLID",
+    "material": "simple-material",
+    "attributes": ["position","normal","uv"]
+}

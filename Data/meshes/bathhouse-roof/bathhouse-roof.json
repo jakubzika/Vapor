@@ -1,0 +1,7 @@
+{
+    "name": "roof",
+    "mesh": "model.obj",
+    "type": "SOLID",
+    "material": "simple-material",
+    "attributes": ["position","normal","uv"]
+}

@@ -1,7 +1,7 @@
 {
     "fragment": "simple-frag.glsl",
     "vertex": "simple-vert.glsl",
-    "uniforms": ["projection","view","model","PVM_inverse", "available_textures","color_texture"],
+    "uniforms": ["projection","view","model","PVM_inverse", "available_textures","color_texture","skybox_texture", "time", "animated","num_frames","frame_length", "frame_width", "view_pos", "roughness", "alpha", "fog"],
     "attributes": ["position","normal", "uv"],
     "uniformBufferObjects": ["lights"]
 }

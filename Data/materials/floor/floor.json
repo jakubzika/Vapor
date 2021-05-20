@@ -1,0 +1,10 @@
+{
+    "shader": "simple",
+    "roughness": 10.0,
+    "metalness": 0.0,
+    "textures": {
+        "color": "floor",
+        "skybox": "skybox"
+
+    }
+}

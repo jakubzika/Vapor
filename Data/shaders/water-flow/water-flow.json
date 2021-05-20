@@ -1,0 +1,7 @@
+{
+    "fragment": "flow-frag.glsl",
+    "vertex": "flow-vert.glsl",
+    "uniforms": ["projection","view","model","PVM_inverse", "available_textures","color_texture", "time", "alpha","view_pos","fog"],
+    "attributes": ["position","normal", "uv"],
+    "uniformBufferObjects": ["lights"]
+}
